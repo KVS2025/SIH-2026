@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Explorer — AyuSutra</title>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+      <div class="brand-title">
+        <span class="name">Ayu<span>Sutra</span></span>
+        <span class="tagline">Terminology Platform</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Clinical Workspace</div>
+      <a href="dashboard.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Overview</a>
+      <a href="terminology.html" class="nav-item"><i data-lucide="search"></i> Terminology Search</a>
+      <a href="translate.html" class="nav-item"><i data-lucide="repeat"></i> Code Translation</a>
+      <a href="fhir.html" class="nav-item"><i data-lucide="file-code"></i> FHIR Record <span class="badge">R4</span></a>
+
+      <div class="nav-section-label">Knowledge & Engine</div>
+      <a href="concept-map.html" class="nav-item"><i data-lucide="git-fork"></i> Concept Maps</a>
+      <a href="versions.html" class="nav-item"><i data-lucide="history"></i> Terminology Versions</a>
+      <a href="api-explorer.html" class="nav-item active"><i data-lucide="terminal"></i> API Explorer</a>
+
+      <div class="nav-section-label">Governance & Monitoring</div>
+      <a href="audit.html" class="nav-item"><i data-lucide="shield-check"></i> Audit & Provenance</a>
+      <a href="health.html" class="nav-item"><i data-lucide="activity"></i> System Health</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="connection-status">
+        <span class="status-dot"></span>
+        <span>FHIR R4 Connected</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Developer API Playground</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="status-badge fhir">REST / FHIR Terminology Service</span>
+        <div class="user-profile">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Dr. Ananya Sharma</span>
+            <span class="user-role">Ayurvedic Physician</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="safety-disclaimer-strip">
+      <div class="gov-message">
+        <span class="gov-pill">
+          <i data-lucide="shield-check"></i> CLINICAL GOVERNANCE
+        </span>
+        <span><strong>Developer API Sandbox</strong> • Interactive testing for AyuSutra FHIR Terminology Services ($translate, $validate-code, ConceptMap).</span>
+      </div>
+      <div class="gov-meta-tag">
+        <i data-lucide="info"></i> Interoperability Protocol v2026.08
+      </div>
+    </div>
+
+    <main class="content-body">
+      <div class="page-header">
+        <h1 class="page-title">Interactive API Explorer</h1>
+        <p class="page-subtitle">Test FHIR Terminology Service operations ($translate, $validate-code, ConceptMap retrieval).</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:28px;">
+        
+        <!-- Endpoints List -->
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          
+          <!-- Endpoint 1 -->
+          <div class="card" style="padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="system-tag namaste" style="background:#15803D;">GET</span>
+                <code style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--color-navy)">/terminology/search</code>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="tryEndpoint('GET_SEARCH')">Try it</button>
+            </div>
+            <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:8px;">
+              Search concepts across NAMASTE, WHO ICD-11 TM2, and ICD-11 Biomedical catalog.
+            </div>
+          </div>
+
+          <!-- Endpoint 2 -->
+          <div class="card" style="padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="system-tag namaste" style="background:#15803D;">GET</span>
+                <code style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--color-navy)">/terminology/{system}/{code}</code>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="tryEndpoint('GET_CODE')">Try it</button>
+            </div>
+            <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:8px;">
+              Retrieve single concept detail and metadata by terminology system and code.
+            </div>
+          </div>
+
+          <!-- Endpoint 3 -->
+          <div class="card" style="padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="system-tag tm2" style="background:#155EEF;">POST</span>
+                <code style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--color-navy)">/translate</code>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="tryEndpoint('POST_TRANSLATE')">Try it</button>
+            </div>
+            <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:8px;">
+              Execute FHIR $translate operation mapping a source coding to target system.
+            </div>
+          </div>
+
+          <!-- Endpoint 4 -->
+          <div class="card" style="padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="system-tag tm2" style="background:#155EEF;">POST</span>
+                <code style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--color-navy)">/validate</code>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="tryEndpoint('POST_VALIDATE')">Try it</button>
+            </div>
+            <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:8px;">
+              Validate coding against official ValueSets.
+            </div>
+          </div>
+
+          <!-- Endpoint 5 -->
+          <div class="card" style="padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="system-tag namaste" style="background:#15803D;">GET</span>
+                <code style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--color-navy)">/concept-map/{id}</code>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="tryEndpoint('GET_MAP')">Try it</button>
+            </div>
+            <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:8px;">
+              Retrieve FHIR ConceptMap resource definition by ID.
+            </div>
+          </div>
+
+          <!-- Endpoint 6 -->
+          <div class="card" style="padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="system-tag tm2" style="background:#155EEF;">POST</span>
+                <code style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--color-navy)">/fhir/condition</code>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="tryEndpoint('POST_CONDITION')">Try it</button>
+            </div>
+            <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:8px;">
+              Generate FHIR Condition resource payload from clinician diagnosis input.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Request / Response Interactive Sandbox Output -->
+        <div class="card" style="display:flex; flex-direction:column; background:#0D1117; color:#C9D1D9;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #21262D;">
+            <div style="font-weight:700; color:#F0F6FC; font-size:0.95rem;" id="sandbox-endpoint-title">
+              Response Payload Sandbox
+            </div>
+            <span class="status-badge" id="sandbox-status-code" style="background:#238636; color:#FFF; font-size:0.75rem;">200 OK (22ms)</span>
+          </div>
+
+          <div style="flex:1; overflow-y:auto;">
+            <pre class="fhir-json-codeblock"><code class="language-json" id="api-response-code">{
+  "status": "success",
+  "endpoint": "GET /terminology/search?q=Amavata",
+  "data": {
+    "namasteCode": "N12345",
+    "tm2Code": "TXXA1.2",
+    "icd11Code": "MB25.1",
+    "provenance": "AYUSH-WHO ConceptMap 2026.x"
+  }
+}</code></pre>
+          </div>
+
+          <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+            <button class="btn btn-sm btn-outline" style="color:#FFF; border-color:#30363D;" onclick="copyToClipboard(document.getElementById('api-response-code').innerText)">
+              <i data-lucide="copy"></i> Copy Payload
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  async function tryEndpoint(type) {
+    const codeEl = document.getElementById("api-response-code");
+    const titleEl = document.getElementById("sandbox-endpoint-title");
+    const statusEl = document.getElementById("sandbox-status-code");
+
+    statusEl.innerText = "Executing...";
+
+    if (type === 'GET_SEARCH') {
+      const data = await window.api.searchTerminology("Amavata");
+      titleEl.innerText = "GET /terminology/search?q=Amavata";
+      codeEl.textContent = JSON.stringify(data[0], null, 2);
+    } else if (type === 'POST_TRANSLATE') {
+      const data = await window.api.translateCode("NAMASTE", "N12345", "ICD-11 TM2");
+      titleEl.innerText = "POST /translate";
+      codeEl.textContent = JSON.stringify(data, null, 2);
+    } else if (type === 'POST_CONDITION') {
+      const data = await window.api.generateFHIRCondition({ patientName: "Rahul Mehta" }, { diagnosis: window.AYUSH_MOCK_DATA.diagnoses[0] });
+      titleEl.innerText = "POST /fhir/condition";
+      codeEl.textContent = JSON.stringify(data, null, 2);
+    } else {
+      titleEl.innerText = "GET /concept-map/cm-namaste-tm2-2026";
+      codeEl.textContent = JSON.stringify({
+        resourceType: "ConceptMap",
+        id: "cm-namaste-tm2-2026",
+        status: "active",
+        publisher: "Ministry of AYUSH & WHO",
+        sourceUri: "http://namaste.ayush.gov.in/codes",
+        targetUri: "http://id.who.int/icd/release/11/2026/mms/tm2"
+      }, null, 2);
+    }
+
+    statusEl.innerText = "200 OK (18ms)";
+    if (window.Prism) Prism.highlightElement(codeEl);
+    window.showToast("API Endpoint Executed", "success");
+  }
+</script>
+</body>
+</html>

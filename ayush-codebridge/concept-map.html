@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept Maps — AyuSutra</title>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/concept-map.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+      <div class="brand-title">
+        <span class="name">Ayu<span>Sutra</span></span>
+        <span class="tagline">Terminology Platform</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Clinical Workspace</div>
+      <a href="dashboard.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Overview</a>
+      <a href="terminology.html" class="nav-item"><i data-lucide="search"></i> Terminology Search</a>
+      <a href="translate.html" class="nav-item"><i data-lucide="repeat"></i> Code Translation</a>
+      <a href="fhir.html" class="nav-item"><i data-lucide="file-code"></i> FHIR Record <span class="badge">R4</span></a>
+
+      <div class="nav-section-label">Knowledge & Engine</div>
+      <a href="concept-map.html" class="nav-item active"><i data-lucide="git-fork"></i> Concept Maps</a>
+      <a href="versions.html" class="nav-item"><i data-lucide="history"></i> Terminology Versions</a>
+      <a href="api-explorer.html" class="nav-item"><i data-lucide="terminal"></i> API Explorer</a>
+
+      <div class="nav-section-label">Governance & Monitoring</div>
+      <a href="audit.html" class="nav-item"><i data-lucide="shield-check"></i> Audit & Provenance</a>
+      <a href="health.html" class="nav-item"><i data-lucide="activity"></i> System Health</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="connection-status">
+        <span class="status-dot"></span>
+        <span>FHIR R4 Connected</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Knowledge Graph & ConceptMap Explorer</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="status-badge"><span class="status-dot" style="width:7px; height:7px;"></span> Graph Index Active</span>
+        <div class="user-profile">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Dr. Ananya Sharma</span>
+            <span class="user-role">Ayurvedic Physician</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="safety-disclaimer-strip">
+      <div class="gov-message">
+        <span class="gov-pill">
+          <i data-lucide="shield-check"></i> CLINICAL GOVERNANCE
+        </span>
+        <span><strong>Graph Topology</strong> • Visual representation of FHIR ConceptMap equivalences across NAMASTE, TM2, and Biomedical nodes.</span>
+      </div>
+      <div class="gov-meta-tag">
+        <i data-lucide="info"></i> Interoperability Protocol v2026.08
+      </div>
+    </div>
+
+    <main class="content-body">
+      <div class="page-header">
+        <h1 class="page-title">Interactive Concept Mapping Graph</h1>
+        <p class="page-subtitle">Click nodes to inspect concept equivalences, broader/narrower links, and non-reductionist unmapped nodes.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 340px; gap:24px;">
+        
+        <!-- Graph Canvas -->
+        <div class="card" style="padding:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="font-weight:800; font-size:0.95rem; color:var(--color-navy)">
+              <i data-lucide="git-merge" style="vertical-align:middle; margin-right:6px; color:var(--color-emerald)"></i>
+              NAMASTE ➔ TM2 ➔ ICD-11 Map Graph
+            </div>
+            <div style="display:flex; gap:8px;">
+              <span class="relationship-badge exact">● exactMatch</span>
+              <span class="relationship-badge related">● broader/narrower</span>
+              <span class="relationship-badge no-eq">● no-map</span>
+            </div>
+          </div>
+
+          <!-- Cytoscape Graph Canvas -->
+          <div id="cy-container"></div>
+        </div>
+
+        <!-- Node Inspector Panel -->
+        <div class="card">
+          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy); margin-bottom:16px;">Concept Inspector</h3>
+          
+          <div id="node-detail-panel" style="padding:16px; background:var(--bg-cream); border-radius:var(--radius-lg); border:1px solid var(--border-light);">
+            <div style="color:var(--text-muted); font-size:0.88rem; text-align:center; padding:20px 0;">
+              Click any node in the graph to view its detailed properties, relationships, and FHIR ConceptMap element payload.
+            </div>
+          </div>
+
+          <div style="margin-top:24px;">
+            <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;">GRAPH CONTROLS</div>
+            <button class="btn btn-outline w-full" onclick="location.reload()" style="margin-bottom:8px;">
+              <i data-lucide="refresh-cw"></i> Reset Graph Layout
+            </button>
+            <button class="btn btn-secondary w-full" onclick="showToast('Exporting ConceptMap graph payload as JSON', 'info')">
+              <i data-lucide="download"></i> Export ConceptMap JSON
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>

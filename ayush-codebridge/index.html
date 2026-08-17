@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AyuSutra — FHIR-Native Terminology Interoperability Platform</title>
+  <meta name="description" content="Connecting NAMASTE ↔ WHO ICD-11 TM2 ↔ Biomedical ICD-11. One Diagnosis. Three Perspectives. Interoperable Everywhere.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Lucide Icons & GSAP -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    .landing-wrapper {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0F2D1E 0%, #14532D 40%, #102A43 100%);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .landing-nav {
+      height: 80px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+    }
+
+    .landing-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .landing-hero-content {
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 32px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .landing-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(22, 128, 90, 0.25);
+      border: 1px solid rgba(167, 243, 208, 0.3);
+      border-radius: var(--radius-pill);
+      color: #A7F3D0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .landing-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .landing-title span {
+      background: linear-gradient(90deg, #A7F3D0 0%, #60A5FA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .landing-desc {
+      font-size: 1.15rem;
+      color: #CBD5E1;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Flow Architecture Visual Box */
+    .flow-visual-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .flow-step-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .flow-step-item i, .flow-step-item svg {
+      color: #A7F3D0;
+    }
+
+    .flow-step-arrow {
+      text-align: center;
+      color: var(--accent-gold);
+      margin: -6px 0 6px 0;
+      font-size: 1.2rem;
+    }
+
+    .landing-footer {
+      padding: 20px 48px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.82rem;
+      color: #94A3B8;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-wrapper">
+    <!-- Top Nav -->
+    <nav class="landing-nav">
+      <div class="landing-brand">
+        <div class="brand-logo-icon">
+          <i data-lucide="network"></i>
+        </div>
+        <div class="brand-title">
+          <span class="name" style="color:#FFF">Ayu<span>Sutra</span></span>
+          <span class="tagline" style="color:#A7F3D0">FHIR R4 Terminology Engine</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:16px; align-items:center;">
+        <span class="status-badge" style="background:rgba(255,255,255,0.1); color:#FFF; border-color:rgba(255,255,255,0.2)">
+          ● WHO API Synced
+        </span>
+        <a href="dashboard.html" class="btn btn-primary" style="background:#16805A;">Enter Workspace</a>
+      </div>
+    </nav>
+
+    <!-- Hero Content -->
+    <main class="landing-hero-content">
+      <div>
+        <div class="landing-badge">
+          <i data-lucide="sparkles"></i> National AYUSH Terminology Interoperability Innovation
+        </div>
+        <h1 class="landing-title">
+          One Diagnosis.<br>
+          <span>Three Perspectives.</span><br>
+          Interoperable Everywhere.
+        </h1>
+        <p class="landing-desc">
+          AyuSutra connects India's Traditional Medicine (NAMASTE) with global healthcare standards (WHO ICD-11 TM2 & Biomedical ICD-11) to generate interoperable FHIR clinical records.
+        </p>
+
+        <div style="display:flex; gap:16px; align-items:center;">
+          <a href="dashboard.html" class="btn btn-lg btn-primary" style="background:#16805A; padding:16px 32px;">
+            <i data-lucide="layout-dashboard"></i> Enter Clinical Workspace
+          </a>
+          <a href="api-explorer.html" class="btn btn-lg btn-outline" style="color:#FFF; border-color:rgba(255,255,255,0.3); background:transparent;">
+            <i data-lucide="code-2"></i> Explore FHIR API
+          </a>
+        </div>
+
+        <div style="margin-top:32px; padding:16px; background:rgba(255,255,255,0.05); border-radius:var(--radius-lg); border:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:0.8rem; color:#94A3B8; margin-bottom:4px;">PRESET CLINICIAN DEMO CREDENTIALS</div>
+          <div style="font-weight:700; color:#FFF; font-size:0.95rem;">Dr. Ananya Sharma, MD (Ayurveda)</div>
+          <div style="font-size:0.82rem; color:#A7F3D0;">Senior Clinical Informationist • AIIMS AYUSH Center / ABDM Registry</div>
+        </div>
+      </div>
+
+      <!-- Flowchart Visual -->
+      <div class="flow-visual-card">
+        <div style="font-size:0.82rem; font-weight:800; color:#A7F3D0; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:16px; text-align:center;">
+          INTEROPERABILITY PIPELINE FLOW
+        </div>
+
+        <div class="flow-step-item">
+          <i data-lucide="hash"></i>
+          <div>
+            <div>NAMASTE</div>
+            <div style="font-size:0.75rem; color:#94A3B8; font-weight:500;">National AYUSH CodeSet (N12345)</div>
+          </div>
+        </div>
+        <div class="flow-step-arrow">↓</div>
+
+        <div class="flow-step-item">
+          <i data-lucide="globe"></i>
+          <div>
+            <div>WHO ICD-11 TM2</div>
+            <div style="font-size:0.75rem; color:#94A3B8; font-weight:500;">Traditional Medicine Module 2 (TXXA1.2)</div>
+          </div>
+        </div>
+        <div class="flow-step-arrow">↓</div>
+
+        <div class="flow-step-item">
+          <i data-lucide="activity"></i>
+          <div>
+            <div>ICD-11 BIOMEDICAL</div>
+            <div style="font-size:0.75rem; color:#94A3B8; font-weight:500;">Biomedical MMS Classification (MB25.1 / Preserved)</div>
+          </div>
+        </div>
+        <div class="flow-step-arrow">↓</div>
+
+        <div class="flow-step-item" style="border-color:#16805A; background:rgba(22,128,90,0.2);">
+          <i data-lucide="file-code" style="color:#A7F3D0"></i>
+          <div>
+            <div style="color:#A7F3D0">FHIR R4 CLINICAL RECORD</div>
+            <div style="font-size:0.75rem; color:#E2E8F0; font-weight:500;">Valid Condition Resource & ABDM EHR Problem List</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+      <div>Ministry of AYUSH & WHO ICD-11 Terminology Interoperability Framework</div>
+      <div>FHIR R4 Connected • AyuSutra 2026 Release</div>
+    </footer>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

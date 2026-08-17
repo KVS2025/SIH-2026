@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FHIR Record Builder — AyuSutra</title>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/fhir.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+      <div class="brand-title">
+        <span class="name">Ayu<span>Sutra</span></span>
+        <span class="tagline">Terminology Platform</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Clinical Workspace</div>
+      <a href="dashboard.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Overview</a>
+      <a href="terminology.html" class="nav-item"><i data-lucide="search"></i> Terminology Search</a>
+      <a href="translate.html" class="nav-item"><i data-lucide="repeat"></i> Code Translation</a>
+      <a href="fhir.html" class="nav-item active"><i data-lucide="file-code"></i> FHIR Record <span class="badge">R4</span></a>
+
+      <div class="nav-section-label">Knowledge & Engine</div>
+      <a href="concept-map.html" class="nav-item"><i data-lucide="git-fork"></i> Concept Maps</a>
+      <a href="versions.html" class="nav-item"><i data-lucide="history"></i> Terminology Versions</a>
+      <a href="api-explorer.html" class="nav-item"><i data-lucide="terminal"></i> API Explorer</a>
+
+      <div class="nav-section-label">Governance & Monitoring</div>
+      <a href="audit.html" class="nav-item"><i data-lucide="shield-check"></i> Audit & Provenance</a>
+      <a href="health.html" class="nav-item"><i data-lucide="activity"></i> System Health</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="connection-status">
+        <span class="status-dot"></span>
+        <span>FHIR R4 Connected</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Create FHIR Clinical Record</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="status-badge fhir">FHIR R4 Standard</span>
+        <div class="user-profile">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Dr. Ananya Sharma</span>
+            <span class="user-role">Ayurvedic Physician</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="safety-disclaimer-strip">
+      <div class="gov-message">
+        <span class="gov-pill">
+          <i data-lucide="shield-check"></i> CLINICAL GOVERNANCE
+        </span>
+        <span><strong>FHIR Record Builder</strong> • Encodes multi-system traditional and biomedical codings into standard FHIR R4 Condition resources.</span>
+      </div>
+      <div class="gov-meta-tag">
+        <i data-lucide="info"></i> Interoperability Protocol v2026.08
+      </div>
+    </div>
+
+    <main class="content-body">
+      <div class="page-header">
+        <h1 class="page-title">Generate FHIR R4 Condition Resource</h1>
+        <p class="page-subtitle">Build interoperable clinical records containing NAMASTE, WHO TM2, and ICD-11 codings.</p>
+      </div>
+
+      <div class="fhir-builder-grid">
+        
+        <!-- Left: Form Inputs & Codings Checkbox Selection -->
+        <div class="fhir-form-card">
+          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy); margin-bottom:20px;">Clinical & Patient Details</h3>
+          
+          <div class="form-group">
+            <label class="form-label">PATIENT NAME</label>
+            <input type="text" class="form-input" id="fhir-patient-name" value="Rahul Mehta">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">ABHA ID (AYUSHMAN BHARAT HEALTH ACCOUNT)</label>
+            <input type="text" class="form-input" id="fhir-patient-abha" value="91-8472-9012-3456" style="font-family:'JetBrains Mono',monospace;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">ENCOUNTER & DATE</label>
+            <input type="text" class="form-input" id="fhir-encounter-id" value="OPD • 17 Aug 2026">
+          </div>
+
+          <div class="form-group" style="margin-top:24px;">
+            <label class="form-label">CLINICAL DIAGNOSIS</label>
+            <select class="form-select" id="fhir-diag-select" style="font-weight:700; color:var(--color-forest)">
+              <option value="Amavata">Amavata (Rheumatoid arthritis-like condition)</option>
+              <option value="Kasa">Kasa (Cough syndrome)</option>
+              <option value="Arsha">Arsha (Hemorrhoids)</option>
+              <option value="Prameha">Prameha (Metabolic syndrome)</option>
+              <option value="Vata-Kaphaja Gulma">Vata-Kaphaja Gulma (Preserved Concept)</option>
+            </select>
+          </div>
+
+          <!-- Multi-system Codings Checklist -->
+          <div style="margin-top:24px; padding:18px; background:var(--bg-cream); border-radius:var(--radius-lg); border:1px solid var(--border-light);">
+            <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px;">
+              MULTISYSTEM CODINGS TO INCLUDE
+            </div>
+
+            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.9rem; margin-bottom:10px; cursor:pointer;">
+              <input type="checkbox" id="chk-namaste" checked style="accent-color:var(--color-forest); width:18px; height:18px;">
+              <span>✓ NAMASTE Code:</span>
+              <span id="fhir-code-namaste" class="code-chip namaste">N12345 (Amavata)</span>
+            </label>
+
+            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.9rem; margin-bottom:10px; cursor:pointer;">
+              <input type="checkbox" id="chk-tm2" checked style="accent-color:var(--color-teal); width:18px; height:18px;">
+              <span>✓ ICD-11 TM2 Code:</span>
+              <span id="fhir-code-tm2" class="code-chip tm2">TXXA1.2</span>
+            </label>
+
+            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.9rem; cursor:pointer;">
+              <input type="checkbox" id="chk-biomedical" checked style="accent-color:var(--color-blue); width:18px; height:18px;">
+              <span>○ ICD-11 Biomedical:</span>
+              <span id="fhir-code-icd11" class="code-chip icd11">MB25.1</span>
+            </label>
+          </div>
+
+          <div style="margin-top:28px; display:flex; flex-direction:column; gap:12px;">
+            <button class="btn btn-primary btn-lg" id="btn-generate-fhir" style="background:#16805A;">
+              <i data-lucide="file-code"></i> Generate FHIR Condition
+            </button>
+            <button class="btn btn-secondary btn-lg" id="btn-save-problem-list">
+              <i data-lucide="bookmark-plus"></i> Save to Problem List
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Live Code Preview Pane -->
+        <div class="fhir-preview-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #21262D;">
+            <div style="font-weight:700; color:#F0F6FC; font-size:0.95rem;">
+              <i data-lucide="code" style="color:#79C0FF; vertical-align:middle; margin-right:6px;"></i>
+              FHIR R4 Demo Resource Output
+            </div>
+            <span class="status-badge" style="background:#1F6FEB; color:#FFF; font-size:0.72rem;">Condition Profile</span>
+          </div>
+
+          <div style="flex:1; overflow-y:auto; max-height:480px;">
+            <pre class="fhir-json-codeblock"><code class="language-json" id="inline-fhir-code-display">{
+  "resourceType": "Condition",
+  "id": "ayusutra-cond-981240",
+  "clinicalStatus": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+        "code": "active"
+      }
+    ]
+  },
+  "code": {
+    "text": "Amavata",
+    "coding": [
+      {
+        "system": "http://namaste.ayush.gov.in/codes",
+        "code": "N12345",
+        "display": "Amavata (अमवात)"
+      },
+      {
+        "system": "http://id.who.int/icd/release/11/2026/mms/tm2",
+        "code": "TXXA1.2"
+      }
+    ]
+  }
+}</code></pre>
+          </div>
+
+          <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:12px;">
+            <button class="btn btn-sm btn-outline" style="color:#FFF; border-color:#30363D;" onclick="if(currentGeneratedFHIR) window.copyToClipboard(JSON.stringify(currentGeneratedFHIR, null, 2)); else showToast('Generate resource first!', 'info');">
+              <i data-lucide="copy"></i> Copy JSON
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>

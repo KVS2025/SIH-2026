@@ -1,0 +1,90 @@
+/* ==========================================================================
+   AYUSH CodeBridge - Responsive Stylesheet
+   ========================================================================== */
+
+/* 1280px Laptops & Small Desktops */
+@media (max-width: 1280px) {
+  .sidebar {
+    width: 240px;
+  }
+  .main-wrapper {
+    margin-left: 240px;
+  }
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .three-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .fhir-builder-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 992px Tablets & Small Laptops */
+@media (max-width: 992px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  .main-wrapper {
+    margin-left: 0;
+  }
+  .topbar {
+    padding: 0 16px;
+  }
+  .topbar-search {
+    width: 200px;
+  }
+  .content-body {
+    padding: 20px 16px;
+  }
+  .translator-grid {
+    grid-template-columns: 1fr;
+  }
+  .swap-btn-wrap {
+    margin: 10px 0;
+  }
+  .mapping-flow-wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .flow-connector {
+    width: 100%;
+    height: 40px;
+  }
+  .connector-line {
+    width: 3px;
+    height: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* 640px Mobile Devices */
+@media (max-width: 640px) {
+  .topbar-search {
+    display: none;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-hero {
+    padding: 24px;
+  }
+  .hero-title {
+    font-size: 1.6rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .main-search-input-wrap input {
+    padding: 14px 16px 14px 44px;
+    font-size: 0.95rem;
+  }
+  .modal-container {
+    width: 95%;
+  }
+}

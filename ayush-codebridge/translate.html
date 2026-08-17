@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Translation — AyuSutra</title>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+      <div class="brand-title">
+        <span class="name">Ayu<span>Sutra</span></span>
+        <span class="tagline">Terminology Platform</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Clinical Workspace</div>
+      <a href="dashboard.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Overview</a>
+      <a href="terminology.html" class="nav-item"><i data-lucide="search"></i> Terminology Search</a>
+      <a href="translate.html" class="nav-item active"><i data-lucide="repeat"></i> Code Translation</a>
+      <a href="fhir.html" class="nav-item"><i data-lucide="file-code"></i> FHIR Record <span class="badge">R4</span></a>
+
+      <div class="nav-section-label">Knowledge & Engine</div>
+      <a href="concept-map.html" class="nav-item"><i data-lucide="git-fork"></i> Concept Maps</a>
+      <a href="versions.html" class="nav-item"><i data-lucide="history"></i> Terminology Versions</a>
+      <a href="api-explorer.html" class="nav-item"><i data-lucide="terminal"></i> API Explorer</a>
+
+      <div class="nav-section-label">Governance & Monitoring</div>
+      <a href="audit.html" class="nav-item"><i data-lucide="shield-check"></i> Audit & Provenance</a>
+      <a href="health.html" class="nav-item"><i data-lucide="activity"></i> System Health</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="connection-status">
+        <span class="status-dot"></span>
+        <span>FHIR R4 Connected</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Code Translation Engine</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="status-badge"><span class="status-dot" style="width:7px; height:7px;"></span> WHO API Synced</span>
+        <div class="user-profile">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Dr. Ananya Sharma</span>
+            <span class="user-role">Ayurvedic Physician</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="safety-disclaimer-strip">
+      <div class="gov-message">
+        <span class="gov-pill">
+          <i data-lucide="shield-check"></i> CLINICAL GOVERNANCE
+        </span>
+        <span><strong>Translation Engine</strong> • Executes FHIR ConceptMap $translate operations between traditional and biomedical code systems.</span>
+      </div>
+      <div class="gov-meta-tag">
+        <i data-lucide="info"></i> Interoperability Protocol v2026.08
+      </div>
+    </div>
+
+    <main class="content-body">
+      <div class="page-header">
+        <h1 class="page-title">Bidirectional Code Translation</h1>
+        <p class="page-subtitle">Translate codes across NAMASTE, WHO ICD-11 TM2, and ICD-11 Biomedical with provenance metadata.</p>
+      </div>
+
+      <!-- Quick Direction Selectors -->
+      <div style="display:flex; gap:12px; margin-bottom:24px;">
+        <button class="recent-chip active-chip" id="btn-dir-namaste-tm2" onclick="setTranslationDirection('NAMASTE', 'ICD-11 TM2')">
+          NAMASTE ➔ TM2
+        </button>
+        <button class="recent-chip" id="btn-dir-tm2-namaste" onclick="setTranslationDirection('ICD-11 TM2', 'NAMASTE')">
+          TM2 ➔ NAMASTE
+        </button>
+        <button class="recent-chip" id="btn-dir-namaste-icd11" onclick="setTranslationDirection('NAMASTE', 'ICD-11 Biomedical')">
+          NAMASTE ➔ ICD-11
+        </button>
+        <button class="recent-chip" id="btn-dir-icd11-namaste" onclick="setTranslationDirection('ICD-11 Biomedical', 'NAMASTE')">
+          ICD-11 ➔ NAMASTE
+        </button>
+      </div>
+
+      <!-- Translator Interface Card -->
+      <div class="translator-card">
+        <div class="translator-grid">
+          
+          <!-- Source Box -->
+          <div class="translator-box">
+            <div class="translator-box-header">SOURCE TERMINOLOGY</div>
+            <div class="form-group">
+              <label class="form-label">System</label>
+              <select class="form-select" id="trans-source-sys">
+                <option value="NAMASTE">NAMASTE (National AYUSH)</option>
+                <option value="ICD-11 TM2">WHO ICD-11 TM2</option>
+                <option value="ICD-11 Biomedical">ICD-11 Biomedical MMS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Source Code / Concept</label>
+              <select class="form-select" id="trans-source-code">
+                <option value="N12345">N12345 — Amavata</option>
+                <option value="N30412">N30412 — Kasa</option>
+                <option value="N48201">N48201 — Arsha</option>
+                <option value="N59014">N59014 — Prameha</option>
+                <option value="N77109">N77109 — Vata-Kaphaja Gulma</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Swap Icon -->
+          <div class="swap-btn-wrap">
+            <button class="swap-btn" title="Swap direction" id="btn-swap-dir">
+              <i data-lucide="arrow-left-right"></i>
+            </button>
+          </div>
+
+          <!-- Target Box -->
+          <div class="translator-box">
+            <div class="translator-box-header">TARGET TERMINOLOGY</div>
+            <div class="form-group">
+              <label class="form-label">Target System</label>
+              <select class="form-select" id="trans-target-sys">
+                <option value="ICD-11 TM2">WHO ICD-11 TM2</option>
+                <option value="NAMASTE">NAMASTE (National AYUSH)</option>
+                <option value="ICD-11 Biomedical">ICD-11 Biomedical MMS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Target Status</label>
+              <input type="text" class="form-input" id="trans-target-status" value="Ready for translation" readonly style="background:#F1F5F9; color:var(--text-muted)">
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:28px; text-align:center;">
+          <button class="btn btn-primary btn-lg" id="btn-run-translate" style="background:#16805A; padding:14px 48px;">
+            <i data-lucide="repeat"></i> Translate Code
+          </button>
+        </div>
+      </div>
+
+      <!-- Translation Output Result Card -->
+      <div class="card" id="translate-result-card" style="margin-top:32px; display:block;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <h3 style="font-size:1.15rem; font-weight:800; color:var(--color-navy)">Translation Result Payload</h3>
+          <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● 200 OK (14ms)</span>
+        </div>
+
+        <div class="rationale-grid" style="margin-bottom:24px;">
+          <div class="rationale-item">
+            <div class="r-label">Target Code</div>
+            <div class="r-val" id="res-target-code" style="font-family:'JetBrains Mono',monospace; color:var(--color-emerald); font-size:1.4rem;">TXXA1.2</div>
+          </div>
+          <div class="rationale-item" style="grid-column: span 2;">
+            <div class="r-label">Target Display Term</div>
+            <div class="r-val" id="res-target-term">Traditional medicine condition characterized by joint pain and stiffness</div>
+          </div>
+          <div class="rationale-item">
+            <div class="r-label">Relationship</div>
+            <div class="r-val" id="res-relationship"><span class="relationship-badge exact">Exact</span></div>
+          </div>
+          <div class="rationale-item">
+            <div class="r-label">Mapping Source</div>
+            <div class="r-val" id="res-mapping-source">Official Ministry of AYUSH & WHO ConceptMap</div>
+          </div>
+          <div class="rationale-item">
+            <div class="r-label">Terminology Version</div>
+            <div class="r-val" id="res-version">TM2 2026.x</div>
+          </div>
+          <div class="rationale-item">
+            <div class="r-label">Confidence Score</div>
+            <div class="r-val" id="res-confidence" style="color:var(--color-forest)">100%</div>
+          </div>
+        </div>
+
+        <div id="trans-warning-box" style="display:none;" class="ai-suggestion-warning">
+          <i data-lucide="alert-triangle"></i>
+          <span id="trans-warning-text">Concept is preserved in TM2 without forcing an inaccurate biomedical code.</span>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function setTranslationDirection(source, target) {
+    document.getElementById("trans-source-sys").value = source;
+    document.getElementById("trans-target-sys").value = target;
+    showToast(`Translation direction set: ${source} ➔ ${target}`, "info");
+    executeTranslation();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const runBtn = document.getElementById("btn-run-translate");
+    const swapBtn = document.getElementById("btn-swap-dir");
+
+    if (runBtn) runBtn.addEventListener("click", executeTranslation);
+    if (swapBtn) {
+      swapBtn.addEventListener("click", () => {
+        const src = document.getElementById("trans-source-sys").value;
+        const tgt = document.getElementById("trans-target-sys").value;
+        document.getElementById("trans-source-sys").value = tgt;
+        document.getElementById("trans-target-sys").value = src;
+        executeTranslation();
+      });
+    }
+  });
+
+  async function executeTranslation() {
+    const srcSys = document.getElementById("trans-source-sys").value;
+    const code = document.getElementById("trans-source-code").value;
+    const tgtSys = document.getElementById("trans-target-sys").value;
+
+    const res = await window.api.translateCode(srcSys, code, tgtSys);
+
+    document.getElementById("res-target-code").innerText = res.target.code;
+    document.getElementById("res-target-term").innerText = res.target.display;
+    document.getElementById("res-relationship").innerHTML = `<span class="relationship-badge ${res.target.relationship === 'Exact' ? 'exact' : 'related'}">${res.target.relationship}</span>`;
+    document.getElementById("res-mapping-source").innerText = res.provenance.source;
+    document.getElementById("res-version").innerText = res.provenance.version;
+    document.getElementById("res-confidence").innerText = res.target.confidence;
+
+    const warnBox = document.getElementById("trans-warning-box");
+    if (res.target.warnings) {
+      warnBox.style.display = "flex";
+      document.getElementById("trans-warning-text").innerText = res.target.warnings;
+    } else {
+      warnBox.style.display = "none";
+    }
+
+    window.showToast("Translation completed", "success");
+  }
+</script>
+</body>
+</html>
