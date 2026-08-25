@@ -1,0 +1,41 @@
+namaste_code,term_sanskrit,term_english,definition,icd11_tm2_mapped_code,demo_case_type
+NAMC-A001,Amlapitta,Hyperacidity disorder,"Digestive disorder characterized by excess acidity, burning sensation in chest/throat, sour eructation, typically linked to Pitta dosha aggravation",TM2-DEMO-01,already_mapped_easy
+NAMC-A002,Grahani,Malabsorption / IBS-type disorder,"Disorder of the digestive fire (Agni) at the level of the small intestine causing irregular digestion, alternating loose/hard stools",TM2-DEMO-02,already_mapped_easy
+NAMC-A003,Jwara,Fever (general),"Elevated body temperature classified by dosha involvement (Vataja, Pittaja, Kaphaja) and stage of progression",TM2-DEMO-03,already_mapped_easy
+NAMC-A004,Kasa,Cough disorder,"Respiratory condition presenting as persistent cough, classified by causative dosha and associated symptoms",TM2-DEMO-04,already_mapped_easy
+NAMC-A005,Shwasa,Dyspnea / breathlessness disorder,"Respiratory disorder with difficulty breathing, classified into five types by severity and dosha involvement",TM2-DEMO-05,already_mapped_easy
+NAMC-A006,Prameha,Metabolic urinary disorder (diabetes-spectrum),"Group of 20 urinary disorders characterized by excessive/abnormal urination, includes Madhumeha (diabetes-like presentation)",TM2-DEMO-06,already_mapped_easy
+NAMC-A007,Kushtha,Skin disorder (general),"Broad category of skin diseases classified by dosha predominance, color, texture and distribution of lesions",TM2-DEMO-07,already_mapped_medium
+NAMC-A008,Arsha,Hemorrhoids,"Vascular swellings in the anal canal, classified by dosha type and bleeding/non-bleeding presentation",TM2-DEMO-08,already_mapped_easy
+NAMC-A009,Vatarakta,Gout-type joint disorder,"Vitiation of Vata and Rakta (blood) causing joint pain and swelling, often in peripheral joints",TM2-DEMO-09,already_mapped_medium
+NAMC-A010,Pandu,Anemia-type disorder,"Pallor and weakness disorder linked to Pitta-dominant dhatu depletion, resembling anemia presentation",TM2-DEMO-10,already_mapped_easy
+NAMC-A011,Sandhivata,Osteoarthritis-type joint disorder,"Vata-predominant degenerative joint disorder causing pain, crepitus and reduced mobility, typically in weight-bearing joints",,unmapped_needs_postcoordination_medium
+NAMC-A012,Vata-Kapha Sandhivata Sheetavriddhi,Joint disorder with cold aggravation,"A detailed subtype of Sandhivata where symptoms are specifically aggravated by cold exposure and Kapha involvement is present alongside Vata",,unmapped_needs_postcoordination_hard
+NAMC-A013,Urustambha,Thigh stiffness disorder,"Stiffness and heaviness localized to the thigh region caused by combined Vata-Kapha obstruction, distinct from general joint stiffness",,unmapped_needs_postcoordination_hard
+NAMC-A014,Hridroga,Cardiac disorder (general),"Heart-related disorder classified by dosha predominance (Vataja, Pittaja, Kaphaja, Tridoshaja) and by involvement of Rakta/Kapha",,unmapped_needs_postcoordination_medium
+NAMC-A015,Unmada,Psychiatric behavioral disorder,"Disorder of mind/behavior classified into six types based on causative dosha and precipitating factors, presenting as altered cognition/behavior",,unmapped_needs_postcoordination_hard
+NAMC-A016,Apasmara,Seizure-type disorder,"Sudden loss of memory/consciousness with abnormal movements, classified by dosha involvement and recurrence pattern",,unmapped_needs_postcoordination_hard
+NAMC-A017,Shvitra,Vitiligo-type skin disorder,"Depigmentation disorder of the skin classified by extent and dosha predominance, distinct from general Kushtha",,unmapped_needs_postcoordination_medium
+NAMC-A018,Medoroga,Obesity / metabolic excess disorder,"Excess accumulation of Meda dhatu (fat tissue) causing metabolic imbalance, heaviness and reduced functional capacity",,unmapped_needs_postcoordination_medium
+NAMC-A019,Raktapitta,Bleeding disorder (Pitta-Rakta type),"Spontaneous bleeding from body orifices due to vitiated Pitta and Rakta, classified by site of bleeding (upward/downward)",,unmapped_needs_postcoordination_medium
+NAMC-A020,Vibandha,Chronic constipation disorder,"Vata-predominant disorder of delayed/difficult bowel movement, distinct from acute constipation",,unmapped_needs_postcoordination_easy
+NAMC-A021,Timira,Progressive vision disorder,"Vision impairment disorder classified into stages by depth of involvement of ocular tissue layers (Patala), used for cataract-spectrum conditions",,unmapped_needs_postcoordination_hard
+NAMC-A022,Karnanada,Tinnitus-type ear disorder,"Perception of abnormal sound in the ear without external source, linked to Vata vitiation in the ear channel",,unmapped_needs_postcoordination_medium
+NAMC-A023,Mutrakrichra,Painful urination disorder,"Difficult/painful urination classified by dosha type, distinct from Prameha's excessive urination pattern",,unmapped_needs_postcoordination_easy
+NAMC-A024,Yonivyapad,Gynecological disorder (general),"Group of 20 disorders of the female reproductive tract classified by dosha and structural/functional involvement",,unmapped_needs_postcoordination_medium
+NAMC-A025,Garbhashaya Kapha Vriddhi,Uterine disorder with Kapha excess,"A detailed subtype of Yonivyapad involving specific Kapha accumulation in the uterine region with associated heaviness and discharge",,unmapped_needs_postcoordination_hard
+NAMC-A026,Shirahshoola,Headache disorder,"Head pain classified by dosha predominance, location and triggering factors, distinct from Ardhavabhedaka (migraine-type)",,unmapped_needs_postcoordination_easy
+NAMC-A027,Ardhavabhedaka,Migraine-type headache,"Unilateral, severe headache with Vata-Pitta involvement, episodic in nature",,unmapped_needs_postcoordination_medium
+NAMC-A028,Kamala,Jaundice-type disorder,"Pitta-predominant disorder presenting as yellow discoloration of skin/eyes, classified by stage and severity",,unmapped_needs_postcoordination_easy
+NAMC-A029,Vata-Pitta Kamala Ushnavriddhi,Jaundice disorder with heat aggravation,"A detailed subtype of Kamala where symptoms are specifically aggravated by heat, with combined Vata-Pitta pathology",,unmapped_needs_postcoordination_hard
+NAMC-A030,Agnimandya,Weak digestive fire disorder,"Reduced digestive capacity (Agni) causing appetite loss and incomplete digestion, foundational disorder for many secondary conditions",,unmapped_needs_postcoordination_easy
+NAMC-A031,Kshaya,Wasting / consumptive disorder,"Progressive depletion of bodily tissues (dhatus), presenting as weakness, weight loss and reduced immunity",,unmapped_needs_postcoordination_medium
+NAMC-A032,Vrana,Wound / ulcer disorder,"Broken skin/tissue disorder classified by cause (traumatic vs. spontaneous) and healing stage",,unmapped_needs_postcoordination_easy
+NAMC-A033,Vata Vrana Sheetapraseka,Non-healing wound with cold discharge,"A detailed subtype of Vrana where the wound is Vata-predominant with cold, thin discharge and delayed healing",,unmapped_needs_postcoordination_hard
+NAMC-A034,Nidranasha,Insomnia disorder,"Disorder of inadequate or disturbed sleep linked to Vata vitiation affecting mental channels",,unmapped_needs_postcoordination_easy
+NAMC-A035,Atisara,Diarrhea disorder,"Acute/chronic loose stool disorder classified by dosha predominance and causative factor",,unmapped_needs_postcoordination_easy
+NAMC-A036,Amavata,Rheumatoid arthritis-type disorder,"Systemic joint disorder caused by accumulation of Ama (toxic metabolic byproduct) combined with vitiated Vata, affecting multiple joints symmetrically",TM2-DEMO-11,already_mapped_medium
+NAMC-A037,Netraroga Shushkakshipaka,Dry eye disorder,"A detailed ophthalmic subtype presenting as dryness and irritation of the eye due to Vata-Pitta involvement in ocular tissue",,unmapped_needs_postcoordination_hard
+NAMC-A038,Gulma,Abdominal mass/lump disorder,"Palpable abdominal swelling classified by dosha involvement and location, distinct from tumors of external origin",,unmapped_needs_postcoordination_medium
+NAMC-A039,Trishna,Excessive thirst disorder,"Pitta-predominant disorder of abnormal, unquenchable thirst",,unmapped_needs_postcoordination_easy
+NAMC-A040,Chhardi,Vomiting disorder,"Disorder of repeated/forceful vomiting classified by dosha predominance and causative trigger",,no_confident_match_edge_case
