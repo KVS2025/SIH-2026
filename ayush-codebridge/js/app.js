@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.lucide.createIcons();
   }
 
+  // Restore sidebar internal scroll position so it never shifts/jumps
+  restoreSidebarScroll();
+
   // Highlight current page in sidebar and handle smooth navigation
   initNavigation();
 
@@ -17,12 +20,31 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
+ * Preserves & restores sidebar internal scroll position across page navigation
+ */
+function restoreSidebarScroll() {
+  const sidebarNav = document.querySelector(".sidebar-nav");
+  if (!sidebarNav) return;
+
+  // Restore saved scroll position
+  const savedScroll = sessionStorage.getItem("ayusutra_sidebar_scroll");
+  if (savedScroll !== null) {
+    sidebarNav.scrollTop = parseInt(savedScroll, 10);
+  }
+
+  // Save scroll position on scroll
+  sidebarNav.addEventListener("scroll", () => {
+    sessionStorage.setItem("ayusutra_sidebar_scroll", sidebarNav.scrollTop);
+  });
+}
+
+/**
  * Responsive Sidebar Toggle & Scroll Jump Prevention
  */
 function initNavigation() {
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
   const navItems = document.querySelectorAll(".nav-item");
-  const sidebar = document.querySelector(".sidebar");
+  const sidebarNav = document.querySelector(".sidebar-nav");
   
   // Ensure backdrop exists
   let backdrop = document.querySelector(".sidebar-backdrop");
@@ -59,10 +81,15 @@ function initNavigation() {
 
     // Handle Nav Item Click
     item.addEventListener("click", (e) => {
+      // Always store current sidebar scroll position before navigating
+      if (sidebarNav) {
+        sessionStorage.setItem("ayusutra_sidebar_scroll", sidebarNav.scrollTop);
+      }
+
       // 1. Prevent jump to top / page reload if user clicks current active page link
       if (itemPath === currentPath || (currentPath === "" && itemPath === "index.html")) {
         e.preventDefault();
-        // If sidebar is open on mobile, just close it gently without scrolling
+        // Close mobile sidebar if open without altering page scroll
         closeMobileSidebar();
         return;
       }

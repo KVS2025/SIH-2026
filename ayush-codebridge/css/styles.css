@@ -125,13 +125,11 @@ body::before {
   transition: transform var(--transition-smooth);
 }
 
-/* Mobile Sidebar Backdrop Overlay */
+/* Mobile Sidebar Crisp Non-Blur Overlay */
 .sidebar-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(16, 42, 67, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(16, 42, 67, 0.35);
   z-index: 95;
   opacity: 0;
   pointer-events: none;
@@ -357,8 +355,6 @@ body::before {
 .topbar {
   height: 72px;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-light);
   display: flex;
   align-items: center;
@@ -776,7 +772,6 @@ body::before {
   position: fixed;
   inset: 0;
   background: rgba(16, 42, 67, 0.6);
-  backdrop-filter: blur(6px);
   z-index: 1000;
   display: flex;
   align-items: center;
