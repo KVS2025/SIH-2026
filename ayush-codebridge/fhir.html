@@ -21,15 +21,22 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="app-container">
   <!-- Left Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Sidebar Navigation">
     <div class="sidebar-header">
-      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
-      <div class="brand-title">
-        <span class="name">Ayu<span>Sutra</span></span>
-        <span class="tagline">Terminology Platform</span>
-      </div>
+      <a href="dashboard.html" class="sidebar-brand-wrap">
+        <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+        <div class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </div>
+      </a>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Navigation">
+        <i data-lucide="x"></i>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Clinical Workspace</div>
@@ -58,7 +65,7 @@
   <div class="main-wrapper">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" title="Toggle Menu">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation drawer" title="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
         <h1 class="topbar-title">Create FHIR Clinical Record</h1>
@@ -87,7 +94,7 @@
       </div>
     </div>
 
-    <main class="content-body">
+    <main class="content-body" id="main-content">
       <div class="page-header">
         <h1 class="page-title">Generate FHIR R4 Condition Resource</h1>
         <p class="page-subtitle">Build interoperable clinical records containing NAMASTE, WHO TM2, and ICD-11 codings.</p>
@@ -97,25 +104,25 @@
         
         <!-- Left: Form Inputs & Codings Checkbox Selection -->
         <div class="fhir-form-card">
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy); margin-bottom:20px;">Clinical & Patient Details</h3>
+          <h2 style="font-size:1.05rem; font-weight:800; color:var(--color-navy); margin-bottom:18px;">Clinical & Patient Details</h2>
           
           <div class="form-group">
-            <label class="form-label">PATIENT NAME</label>
+            <label class="form-label" for="fhir-patient-name">PATIENT NAME</label>
             <input type="text" class="form-input" id="fhir-patient-name" value="Rahul Mehta">
           </div>
 
           <div class="form-group">
-            <label class="form-label">ABHA ID (AYUSHMAN BHARAT HEALTH ACCOUNT)</label>
+            <label class="form-label" for="fhir-patient-abha">ABHA ID (AYUSHMAN BHARAT HEALTH ACCOUNT)</label>
             <input type="text" class="form-input" id="fhir-patient-abha" value="91-8472-9012-3456" style="font-family:'JetBrains Mono',monospace;">
           </div>
 
           <div class="form-group">
-            <label class="form-label">ENCOUNTER & DATE</label>
+            <label class="form-label" for="fhir-encounter-id">ENCOUNTER & DATE</label>
             <input type="text" class="form-input" id="fhir-encounter-id" value="OPD • 17 Aug 2026">
           </div>
 
-          <div class="form-group" style="margin-top:24px;">
-            <label class="form-label">CLINICAL DIAGNOSIS</label>
+          <div class="form-group" style="margin-top:20px;">
+            <label class="form-label" for="fhir-diag-select">CLINICAL DIAGNOSIS</label>
             <select class="form-select" id="fhir-diag-select" style="font-weight:700; color:var(--color-forest)">
               <option value="Amavata">Amavata (Rheumatoid arthritis-like condition)</option>
               <option value="Kasa">Kasa (Cough syndrome)</option>
@@ -126,31 +133,31 @@
           </div>
 
           <!-- Multi-system Codings Checklist -->
-          <div style="margin-top:24px; padding:18px; background:var(--bg-cream); border-radius:var(--radius-lg); border:1px solid var(--border-light);">
-            <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px;">
+          <div style="margin-top:20px; padding:16px; background:var(--bg-cream); border-radius:var(--radius-lg); border:1px solid var(--border-light);">
+            <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px; letter-spacing:0.04em;">
               MULTISYSTEM CODINGS TO INCLUDE
             </div>
 
-            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.9rem; margin-bottom:10px; cursor:pointer;">
-              <input type="checkbox" id="chk-namaste" checked style="accent-color:var(--color-forest); width:18px; height:18px;">
-              <span>✓ NAMASTE Code:</span>
+            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.88rem; margin-bottom:10px; cursor:pointer; min-height:36px;">
+              <input type="checkbox" id="chk-namaste" checked style="accent-color:var(--color-forest); width:18px; height:18px; flex-shrink:0;">
+              <span>✓ NAMASTE:</span>
               <span id="fhir-code-namaste" class="code-chip namaste">N12345 (Amavata)</span>
             </label>
 
-            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.9rem; margin-bottom:10px; cursor:pointer;">
-              <input type="checkbox" id="chk-tm2" checked style="accent-color:var(--color-teal); width:18px; height:18px;">
-              <span>✓ ICD-11 TM2 Code:</span>
+            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.88rem; margin-bottom:10px; cursor:pointer; min-height:36px;">
+              <input type="checkbox" id="chk-tm2" checked style="accent-color:var(--color-teal); width:18px; height:18px; flex-shrink:0;">
+              <span>✓ ICD-11 TM2:</span>
               <span id="fhir-code-tm2" class="code-chip tm2">TXXA1.2</span>
             </label>
 
-            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.9rem; cursor:pointer;">
-              <input type="checkbox" id="chk-biomedical" checked style="accent-color:var(--color-blue); width:18px; height:18px;">
-              <span>○ ICD-11 Biomedical:</span>
+            <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.88rem; cursor:pointer; min-height:36px;">
+              <input type="checkbox" id="chk-biomedical" checked style="accent-color:var(--color-blue); width:18px; height:18px; flex-shrink:0;">
+              <span>○ ICD-11 MMS:</span>
               <span id="fhir-code-icd11" class="code-chip icd11">MB25.1</span>
             </label>
           </div>
 
-          <div style="margin-top:28px; display:flex; flex-direction:column; gap:12px;">
+          <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
             <button class="btn btn-primary btn-lg" id="btn-generate-fhir" style="background:#16805A;">
               <i data-lucide="file-code"></i> Generate FHIR Condition
             </button>
@@ -162,12 +169,12 @@
 
         <!-- Right: Live Code Preview Pane -->
         <div class="fhir-preview-card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #21262D;">
-            <div style="font-weight:700; color:#F0F6FC; font-size:0.95rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #21262D; flex-wrap:wrap; gap:8px;">
+            <div style="font-weight:700; color:#F0F6FC; font-size:0.92rem;">
               <i data-lucide="code" style="color:#79C0FF; vertical-align:middle; margin-right:6px;"></i>
               FHIR R4 Demo Resource Output
             </div>
-            <span class="status-badge" style="background:#1F6FEB; color:#FFF; font-size:0.72rem;">Condition Profile</span>
+            <span class="status-badge" style="background:#1F6FEB; color:#FFF; font-size:0.7rem;">Condition Profile</span>
           </div>
 
           <div style="flex:1; overflow-y:auto; max-height:480px;">
@@ -199,8 +206,8 @@
 }</code></pre>
           </div>
 
-          <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:12px;">
-            <button class="btn btn-sm btn-outline" style="color:#FFF; border-color:#30363D;" onclick="if(currentGeneratedFHIR) window.copyToClipboard(JSON.stringify(currentGeneratedFHIR, null, 2)); else showToast('Generate resource first!', 'info');">
+          <div style="margin-top:14px; display:flex; justify-content:flex-end; gap:10px;">
+            <button class="btn btn-sm btn-outline" style="color:#FFF; border-color:#30363D; background:transparent;" onclick="if(currentGeneratedFHIR) window.copyToClipboard(JSON.stringify(currentGeneratedFHIR, null, 2)); else showToast('Generate resource first!', 'info');">
               <i data-lucide="copy"></i> Copy JSON
             </button>
           </div>
@@ -211,8 +218,34 @@
   </div>
 </div>
 
+<!-- Ergonomic Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+  <a href="dashboard.html" class="mobile-bottom-item">
+    <i data-lucide="layout-dashboard"></i>
+    <span>Overview</span>
+  </a>
+  <a href="terminology.html" class="mobile-bottom-item">
+    <i data-lucide="search"></i>
+    <span>Search</span>
+  </a>
+  <a href="translate.html" class="mobile-bottom-item">
+    <i data-lucide="repeat"></i>
+    <span>Translate</span>
+  </a>
+  <a href="fhir.html" class="mobile-bottom-item active">
+    <i data-lucide="file-code"></i>
+    <span>FHIR R4</span>
+  </a>
+  <a href="#" class="mobile-bottom-item mobile-bottom-more">
+    <i data-lucide="menu"></i>
+    <span>More</span>
+  </a>
+</nav>
+
 <script>
-  lucide.createIcons();
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 </script>
 </body>
 </html>

@@ -18,62 +18,67 @@
   <style>
     .landing-wrapper {
       min-height: 100vh;
-      background: linear-gradient(135deg, #0F2D1E 0%, #14532D 40%, #102A43 100%);
+      min-height: 100dvh;
+      background: linear-gradient(135deg, #092015 0%, #14532D 45%, #102A43 100%);
       color: #FFFFFF;
       display: flex;
       flex-direction: column;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .landing-nav {
-      height: 80px;
-      padding: 0 48px;
+      min-height: 72px;
+      padding: 12px clamp(16px, 3.5vw, 48px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       z-index: 10;
+      gap: 16px;
     }
 
     .landing-brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      text-decoration: none;
     }
 
     .landing-hero-content {
       flex: 1;
-      max-width: 1200px;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 60px 32px;
+      padding: clamp(32px, 5vw, 64px) clamp(16px, 3vw, 36px);
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 48px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(32px, 4vw, 56px);
       align-items: center;
       z-index: 10;
+      width: 100%;
     }
 
     .landing-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
-      background: rgba(22, 128, 90, 0.25);
-      border: 1px solid rgba(167, 243, 208, 0.3);
+      padding: 6px 14px;
+      background: rgba(22, 128, 90, 0.28);
+      border: 1px solid rgba(167, 243, 208, 0.35);
       border-radius: var(--radius-pill);
       color: #A7F3D0;
-      font-size: 0.85rem;
+      font-size: clamp(0.75rem, 1vw, 0.85rem);
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      max-width: 100%;
     }
 
     .landing-title {
-      font-size: 3.2rem;
+      font-size: clamp(1.85rem, 4vw, 3.2rem);
       font-weight: 800;
       line-height: 1.15;
       letter-spacing: -0.03em;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .landing-title span {
@@ -83,63 +88,79 @@
     }
 
     .landing-desc {
-      font-size: 1.15rem;
+      font-size: clamp(0.92rem, 1.2vw, 1.12rem);
       color: #CBD5E1;
       line-height: 1.6;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      max-width: 600px;
     }
 
     /* Flow Architecture Visual Box */
     .flow-visual-card {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: var(--radius-xl);
-      padding: 32px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      padding: clamp(20px, 2.5vw, 32px);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+      width: 100%;
     }
 
     .flow-step-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 14px 20px;
+      gap: 14px;
+      padding: 12px 18px;
       background: rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-lg);
-      margin-bottom: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
+      transition: transform var(--transition-fast), background var(--transition-fast);
+    }
+
+    .flow-step-item:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateX(3px);
     }
 
     .flow-step-item i, .flow-step-item svg {
       color: #A7F3D0;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
     }
 
     .flow-step-arrow {
       text-align: center;
       color: var(--accent-gold);
-      margin: -6px 0 6px 0;
-      font-size: 1.2rem;
+      margin: -2px 0 6px 0;
+      font-size: 1.1rem;
+      font-weight: 800;
+      opacity: 0.85;
     }
 
     .landing-footer {
-      padding: 20px 48px;
+      padding: 16px clamp(16px, 3.5vw, 48px);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: #94A3B8;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       z-index: 10;
+      flex-wrap: wrap;
+      gap: 12px;
     }
   </style>
 </head>
 <body>
   <div class="landing-wrapper">
     <!-- Top Nav -->
-    <nav class="landing-nav">
-      <div class="landing-brand">
+    <nav class="landing-nav" aria-label="Main Landing Navigation">
+      <a href="index.html" class="landing-brand">
         <div class="brand-logo-icon">
           <i data-lucide="network"></i>
         </div>
@@ -147,12 +168,14 @@
           <span class="name" style="color:#FFF">Ayu<span>Sutra</span></span>
           <span class="tagline" style="color:#A7F3D0">FHIR R4 Terminology Engine</span>
         </div>
-      </div>
-      <div style="display:flex; gap:16px; align-items:center;">
-        <span class="status-badge" style="background:rgba(255,255,255,0.1); color:#FFF; border-color:rgba(255,255,255,0.2)">
+      </a>
+      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <span class="status-badge" style="background:rgba(255,255,255,0.12); color:#FFF; border-color:rgba(255,255,255,0.25)">
           ● WHO API Synced
         </span>
-        <a href="dashboard.html" class="btn btn-primary" style="background:#16805A;">Enter Workspace</a>
+        <a href="dashboard.html" class="btn btn-primary" style="background:#16805A;">
+          Enter Workspace <i data-lucide="arrow-right"></i>
+        </a>
       </div>
     </nav>
 
@@ -160,7 +183,7 @@
     <main class="landing-hero-content">
       <div>
         <div class="landing-badge">
-          <i data-lucide="sparkles"></i> National AYUSH Terminology Interoperability Innovation
+          <i data-lucide="sparkles"></i> National AYUSH Terminology Interoperability Framework
         </div>
         <h1 class="landing-title">
           One Diagnosis.<br>
@@ -168,11 +191,11 @@
           Interoperable Everywhere.
         </h1>
         <p class="landing-desc">
-          AyuSutra connects India's Traditional Medicine (NAMASTE) with global healthcare standards (WHO ICD-11 TM2 & Biomedical ICD-11) to generate interoperable FHIR clinical records.
+          AyuSutra connects India's Traditional Medicine (NAMASTE) with global healthcare standards (WHO ICD-11 TM2 & Biomedical ICD-11) to generate clinical-grade, interoperable FHIR R4 records.
         </p>
 
-        <div style="display:flex; gap:16px; align-items:center;">
-          <a href="dashboard.html" class="btn btn-lg btn-primary" style="background:#16805A; padding:16px 32px;">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:28px;">
+          <a href="dashboard.html" class="btn btn-lg btn-primary" style="background:#16805A;">
             <i data-lucide="layout-dashboard"></i> Enter Clinical Workspace
           </a>
           <a href="api-explorer.html" class="btn btn-lg btn-outline" style="color:#FFF; border-color:rgba(255,255,255,0.3); background:transparent;">
@@ -180,16 +203,16 @@
           </a>
         </div>
 
-        <div style="margin-top:32px; padding:16px; background:rgba(255,255,255,0.05); border-radius:var(--radius-lg); border:1px solid rgba(255,255,255,0.1);">
-          <div style="font-size:0.8rem; color:#94A3B8; margin-bottom:4px;">PRESET CLINICIAN DEMO CREDENTIALS</div>
-          <div style="font-weight:700; color:#FFF; font-size:0.95rem;">Dr. Ananya Sharma, MD (Ayurveda)</div>
-          <div style="font-size:0.82rem; color:#A7F3D0;">Senior Clinical Informationist • AIIMS AYUSH Center / ABDM Registry</div>
+        <div style="padding:14px 18px; background:rgba(255,255,255,0.06); border-radius:var(--radius-lg); border:1px solid rgba(255,255,255,0.14);">
+          <div style="font-size:0.75rem; color:#94A3B8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">PRESET CLINICIAN DEMO CREDENTIALS</div>
+          <div style="font-weight:700; color:#FFF; font-size:0.92rem;">Dr. Ananya Sharma, MD (Ayurveda)</div>
+          <div style="font-size:0.78rem; color:#A7F3D0;">Senior Clinical Informationist • AIIMS AYUSH Center / ABDM Registry</div>
         </div>
       </div>
 
       <!-- Flowchart Visual -->
       <div class="flow-visual-card">
-        <div style="font-size:0.82rem; font-weight:800; color:#A7F3D0; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:16px; text-align:center;">
+        <div style="font-size:0.8rem; font-weight:800; color:#A7F3D0; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px; text-align:center;">
           INTEROPERABILITY PIPELINE FLOW
         </div>
 
@@ -197,7 +220,7 @@
           <i data-lucide="hash"></i>
           <div>
             <div>NAMASTE</div>
-            <div style="font-size:0.75rem; color:#94A3B8; font-weight:500;">National AYUSH CodeSet (N12345)</div>
+            <div style="font-size:0.75rem; color:#CBD5E1; font-weight:500;">National AYUSH CodeSet (N12345)</div>
           </div>
         </div>
         <div class="flow-step-arrow">↓</div>
@@ -206,7 +229,7 @@
           <i data-lucide="globe"></i>
           <div>
             <div>WHO ICD-11 TM2</div>
-            <div style="font-size:0.75rem; color:#94A3B8; font-weight:500;">Traditional Medicine Module 2 (TXXA1.2)</div>
+            <div style="font-size:0.75rem; color:#CBD5E1; font-weight:500;">Traditional Medicine Module 2 (TXXA1.2)</div>
           </div>
         </div>
         <div class="flow-step-arrow">↓</div>
@@ -215,12 +238,12 @@
           <i data-lucide="activity"></i>
           <div>
             <div>ICD-11 BIOMEDICAL</div>
-            <div style="font-size:0.75rem; color:#94A3B8; font-weight:500;">Biomedical MMS Classification (MB25.1 / Preserved)</div>
+            <div style="font-size:0.75rem; color:#CBD5E1; font-weight:500;">Biomedical MMS Classification (MB25.1 / Preserved)</div>
           </div>
         </div>
         <div class="flow-step-arrow">↓</div>
 
-        <div class="flow-step-item" style="border-color:#16805A; background:rgba(22,128,90,0.2);">
+        <div class="flow-step-item" style="border-color:#16805A; background:rgba(22,128,90,0.28);">
           <i data-lucide="file-code" style="color:#A7F3D0"></i>
           <div>
             <div style="color:#A7F3D0">FHIR R4 CLINICAL RECORD</div>
@@ -238,7 +261,9 @@
   </div>
 
   <script>
-    lucide.createIcons();
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   </script>
 </body>
 </html>

@@ -1,22 +1,25 @@
 /**
- * AyuSutra - Main Application Logic
- * Responsive Navigation, Toast Notifications, Modal Control & UI Enhancements
+ * AyuSutra - Main Application Logic (Production Grade)
+ * Responsive Navigation, Drawer Control, Mobile Bottom Navigation, Toasts & Modals
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize Lucide icons if available
+  // 1. Initialize Lucide icons if available
   if (window.lucide) {
     window.lucide.createIcons();
   }
 
-  // Restore sidebar internal scroll position so it never shifts/jumps
-  restoreSidebarScroll();
-
-  // Highlight current page in sidebar and handle smooth navigation
+  // 2. Setup Responsive Navigation & Drawer
   initNavigation();
 
-  // Initialize animated counter elements
+  // 3. Restore sidebar scroll position across navigation
+  restoreSidebarScroll();
+
+  // 4. Initialize animated KPI counter elements
   initAnimatedCounters();
+
+  // 5. Global Keyboard Accessibility (Escape to close modals/drawers)
+  initKeyboardShortcuts();
 });
 
 /**
@@ -26,27 +29,26 @@ function restoreSidebarScroll() {
   const sidebarNav = document.querySelector(".sidebar-nav");
   if (!sidebarNav) return;
 
-  // Restore saved scroll position
   const savedScroll = sessionStorage.getItem("ayusutra_sidebar_scroll");
   if (savedScroll !== null) {
     sidebarNav.scrollTop = parseInt(savedScroll, 10);
   }
 
-  // Save scroll position on scroll
   sidebarNav.addEventListener("scroll", () => {
     sessionStorage.setItem("ayusutra_sidebar_scroll", sidebarNav.scrollTop);
   });
 }
 
 /**
- * Responsive Sidebar Toggle & Scroll Jump Prevention
+ * Responsive Navigation (Desktop Sidebar, Off-Canvas Drawer, & Mobile Bottom Bar)
  */
 function initNavigation() {
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
   const navItems = document.querySelectorAll(".nav-item");
+  const bottomNavItems = document.querySelectorAll(".mobile-bottom-item");
   const sidebarNav = document.querySelector(".sidebar-nav");
   
-  // Ensure backdrop exists
+  // Ensure backdrop exists in DOM
   let backdrop = document.querySelector(".sidebar-backdrop");
   if (!backdrop) {
     backdrop = document.createElement("div");
@@ -63,48 +65,85 @@ function initNavigation() {
     });
   }
 
+  // Close Drawer Button inside sidebar header
+  const closeBtn = document.getElementById("sidebar-close-btn");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeMobileSidebar();
+    });
+  }
+
   // Close sidebar when clicking backdrop
   backdrop.addEventListener("click", () => {
     closeMobileSidebar();
   });
 
+  // Highlight Active Item in Sidebar
   navItems.forEach(item => {
     const href = item.getAttribute("href");
     const itemPath = href ? href.split("/").pop() : "";
 
-    // Highlight active item
     if (itemPath === currentPath || (currentPath === "" && itemPath === "index.html")) {
       item.classList.add("active");
     } else {
       item.classList.remove("active");
     }
 
-    // Handle Nav Item Click
     item.addEventListener("click", (e) => {
-      // Always store current sidebar scroll position before navigating
       if (sidebarNav) {
         sessionStorage.setItem("ayusutra_sidebar_scroll", sidebarNav.scrollTop);
       }
 
-      // 1. Prevent jump to top / page reload if user clicks current active page link
       if (itemPath === currentPath || (currentPath === "" && itemPath === "index.html")) {
         e.preventDefault();
-        // Close mobile sidebar if open without altering page scroll
         closeMobileSidebar();
         return;
       }
 
-      // 2. If navigating to a different page on mobile, close sidebar first
       closeMobileSidebar();
     });
+  });
+
+  // Highlight Active Item in Mobile Bottom Bar
+  bottomNavItems.forEach(item => {
+    const href = item.getAttribute("href");
+    const itemPath = href ? href.split("/").pop() : "";
+
+    if (itemPath === currentPath || (currentPath === "" && itemPath === "index.html")) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+
+    // If clicking "More" button in bottom nav, toggle drawer
+    if (item.classList.contains("mobile-bottom-more")) {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleMobileSidebar();
+      });
+    }
   });
 }
 
 function toggleMobileSidebar() {
   const sidebar = document.querySelector(".sidebar");
   const backdrop = document.querySelector(".sidebar-backdrop");
-  if (sidebar) sidebar.classList.toggle("mobile-open");
-  if (backdrop) backdrop.classList.toggle("active");
+  const isOpen = sidebar && sidebar.classList.contains("mobile-open");
+
+  if (isOpen) {
+    closeMobileSidebar();
+  } else {
+    openMobileSidebar();
+  }
+}
+
+function openMobileSidebar() {
+  const sidebar = document.querySelector(".sidebar");
+  const backdrop = document.querySelector(".sidebar-backdrop");
+  if (sidebar) sidebar.classList.add("mobile-open");
+  if (backdrop) backdrop.classList.add("active");
+  document.body.classList.add("scroll-locked");
 }
 
 function closeMobileSidebar() {
@@ -112,6 +151,7 @@ function closeMobileSidebar() {
   const backdrop = document.querySelector(".sidebar-backdrop");
   if (sidebar) sidebar.classList.remove("mobile-open");
   if (backdrop) backdrop.classList.remove("active");
+  document.body.classList.remove("scroll-locked");
 }
 
 /**
@@ -149,12 +189,33 @@ window.showToast = function(message, type = "success") {
  * Copy string to clipboard with feedback
  */
 window.copyToClipboard = function(text, successMessage = "Copied to clipboard!") {
-  navigator.clipboard.writeText(text).then(() => {
-    window.showToast(successMessage, "success");
-  }).catch(err => {
-    window.showToast("Failed to copy text", "error");
-  });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      window.showToast(successMessage, "success");
+    }).catch(() => {
+      fallbackCopyText(text, successMessage);
+    });
+  } else {
+    fallbackCopyText(text, successMessage);
+  }
 };
+
+function fallbackCopyText(text, successMessage) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.opacity = "0";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    window.showToast(successMessage, "success");
+  } catch (err) {
+    window.showToast("Failed to copy text", "error");
+  }
+  document.body.removeChild(textArea);
+}
 
 /**
  * Modal Manager
@@ -163,6 +224,7 @@ window.openModal = function(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
     modal.classList.add("active");
+    document.body.classList.add("scroll-locked");
   }
 };
 
@@ -170,8 +232,27 @@ window.closeModal = function(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
     modal.classList.remove("active");
+    document.body.classList.remove("scroll-locked");
   }
 };
+
+/**
+ * Global Keyboard Accessibility
+ */
+function initKeyboardShortcuts() {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      // Close active modals
+      const activeModal = document.querySelector(".modal-overlay.active");
+      if (activeModal) {
+        activeModal.classList.remove("active");
+        document.body.classList.remove("scroll-locked");
+      }
+      // Close mobile drawer
+      closeMobileSidebar();
+    }
+  });
+}
 
 /**
  * Animated Counters for KPI numbers

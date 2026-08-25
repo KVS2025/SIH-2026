@@ -16,15 +16,22 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="app-container">
   <!-- Left Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Sidebar Navigation">
     <div class="sidebar-header">
-      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
-      <div class="brand-title">
-        <span class="name">Ayu<span>Sutra</span></span>
-        <span class="tagline">Terminology Platform</span>
-      </div>
+      <a href="dashboard.html" class="sidebar-brand-wrap">
+        <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+        <div class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </div>
+      </a>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Navigation">
+        <i data-lucide="x"></i>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Clinical Workspace</div>
@@ -53,7 +60,7 @@
   <div class="main-wrapper">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" title="Toggle Menu">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation drawer" title="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
         <h1 class="topbar-title">Code Translation Engine</h1>
@@ -82,24 +89,24 @@
       </div>
     </div>
 
-    <main class="content-body">
+    <main class="content-body" id="main-content">
       <div class="page-header">
         <h1 class="page-title">Bidirectional Code Translation</h1>
         <p class="page-subtitle">Translate codes across NAMASTE, WHO ICD-11 TM2, and ICD-11 Biomedical with provenance metadata.</p>
       </div>
 
       <!-- Quick Direction Selectors -->
-      <div style="display:flex; gap:12px; margin-bottom:24px;">
-        <button class="recent-chip active-chip" id="btn-dir-namaste-tm2" onclick="setTranslationDirection('NAMASTE', 'ICD-11 TM2')">
+      <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+        <button type="button" class="recent-chip active-chip" id="btn-dir-namaste-tm2" onclick="setTranslationDirection('NAMASTE', 'ICD-11 TM2')">
           NAMASTE ➔ TM2
         </button>
-        <button class="recent-chip" id="btn-dir-tm2-namaste" onclick="setTranslationDirection('ICD-11 TM2', 'NAMASTE')">
+        <button type="button" class="recent-chip" id="btn-dir-tm2-namaste" onclick="setTranslationDirection('ICD-11 TM2', 'NAMASTE')">
           TM2 ➔ NAMASTE
         </button>
-        <button class="recent-chip" id="btn-dir-namaste-icd11" onclick="setTranslationDirection('NAMASTE', 'ICD-11 Biomedical')">
+        <button type="button" class="recent-chip" id="btn-dir-namaste-icd11" onclick="setTranslationDirection('NAMASTE', 'ICD-11 Biomedical')">
           NAMASTE ➔ ICD-11
         </button>
-        <button class="recent-chip" id="btn-dir-icd11-namaste" onclick="setTranslationDirection('ICD-11 Biomedical', 'NAMASTE')">
+        <button type="button" class="recent-chip" id="btn-dir-icd11-namaste" onclick="setTranslationDirection('ICD-11 Biomedical', 'NAMASTE')">
           ICD-11 ➔ NAMASTE
         </button>
       </div>
@@ -112,15 +119,15 @@
           <div class="translator-box">
             <div class="translator-box-header">SOURCE TERMINOLOGY</div>
             <div class="form-group">
-              <label class="form-label">System</label>
+              <label class="form-label" for="trans-source-sys">System</label>
               <select class="form-select" id="trans-source-sys">
                 <option value="NAMASTE">NAMASTE (National AYUSH)</option>
                 <option value="ICD-11 TM2">WHO ICD-11 TM2</option>
                 <option value="ICD-11 Biomedical">ICD-11 Biomedical MMS</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label">Source Code / Concept</label>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="trans-source-code">Source Code / Concept</label>
               <select class="form-select" id="trans-source-code">
                 <option value="N12345">N12345 — Amavata</option>
                 <option value="N30412">N30412 — Kasa</option>
@@ -133,7 +140,7 @@
 
           <!-- Swap Icon -->
           <div class="swap-btn-wrap">
-            <button class="swap-btn" title="Swap direction" id="btn-swap-dir">
+            <button class="swap-btn" title="Swap direction" id="btn-swap-dir" aria-label="Swap Translation Direction">
               <i data-lucide="arrow-left-right"></i>
             </button>
           </div>
@@ -142,41 +149,41 @@
           <div class="translator-box">
             <div class="translator-box-header">TARGET TERMINOLOGY</div>
             <div class="form-group">
-              <label class="form-label">Target System</label>
+              <label class="form-label" for="trans-target-sys">Target System</label>
               <select class="form-select" id="trans-target-sys">
                 <option value="ICD-11 TM2">WHO ICD-11 TM2</option>
                 <option value="NAMASTE">NAMASTE (National AYUSH)</option>
                 <option value="ICD-11 Biomedical">ICD-11 Biomedical MMS</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label">Target Status</label>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="trans-target-status">Target Status</label>
               <input type="text" class="form-input" id="trans-target-status" value="Ready for translation" readonly style="background:#F1F5F9; color:var(--text-muted)">
             </div>
           </div>
 
         </div>
 
-        <div style="margin-top:28px; text-align:center;">
-          <button class="btn btn-primary btn-lg" id="btn-run-translate" style="background:#16805A; padding:14px 48px;">
+        <div style="margin-top:24px; text-align:center;">
+          <button class="btn btn-primary btn-lg" id="btn-run-translate" style="background:#16805A; padding:12px 36px;">
             <i data-lucide="repeat"></i> Translate Code
           </button>
         </div>
       </div>
 
       <!-- Translation Output Result Card -->
-      <div class="card" id="translate-result-card" style="margin-top:32px; display:block;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-          <h3 style="font-size:1.15rem; font-weight:800; color:var(--color-navy)">Translation Result Payload</h3>
+      <div class="card" id="translate-result-card" style="margin-top:24px; display:block;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:8px;">
+          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy)">Translation Result Payload</h3>
           <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● 200 OK (14ms)</span>
         </div>
 
-        <div class="rationale-grid" style="margin-bottom:24px;">
+        <div class="rationale-grid" style="margin-bottom:20px;">
           <div class="rationale-item">
             <div class="r-label">Target Code</div>
-            <div class="r-val" id="res-target-code" style="font-family:'JetBrains Mono',monospace; color:var(--color-emerald); font-size:1.4rem;">TXXA1.2</div>
+            <div class="r-val" id="res-target-code" style="font-family:'JetBrains Mono',monospace; color:var(--color-emerald); font-size:1.3rem;">TXXA1.2</div>
           </div>
-          <div class="rationale-item" style="grid-column: span 2;">
+          <div class="rationale-item">
             <div class="r-label">Target Display Term</div>
             <div class="r-val" id="res-target-term">Traditional medicine condition characterized by joint pain and stiffness</div>
           </div>
@@ -209,8 +216,34 @@
   </div>
 </div>
 
+<!-- Ergonomic Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+  <a href="dashboard.html" class="mobile-bottom-item">
+    <i data-lucide="layout-dashboard"></i>
+    <span>Overview</span>
+  </a>
+  <a href="terminology.html" class="mobile-bottom-item">
+    <i data-lucide="search"></i>
+    <span>Search</span>
+  </a>
+  <a href="translate.html" class="mobile-bottom-item active">
+    <i data-lucide="repeat"></i>
+    <span>Translate</span>
+  </a>
+  <a href="fhir.html" class="mobile-bottom-item">
+    <i data-lucide="file-code"></i>
+    <span>FHIR R4</span>
+  </a>
+  <a href="#" class="mobile-bottom-item mobile-bottom-more">
+    <i data-lucide="menu"></i>
+    <span>More</span>
+  </a>
+</nav>
+
 <script>
-  lucide.createIcons();
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 
   function setTranslationDirection(source, target) {
     document.getElementById("trans-source-sys").value = source;

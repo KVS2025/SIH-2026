@@ -1,321 +1,366 @@
 /* ==========================================================================
-   AyuSutra - Ultra-Responsive Master Stylesheet
-   Adapts for 4K Monitors, 1440px Desktop, 1024px Laptop, 768px Tablet, & Mobile (320px - 640px)
+   AyuSutra - Ultra-Responsive Master Engine (Production Grade)
+   Adapts for 320px - 430px Mobile, 600px - 1024px Tablets, 1280px - 1920px Desktop, & 2560px+ 4K
    ========================================================================== */
 
-/* Global Smooth Fluid Resizing Primitives */
-:root {
-  --fluid-h1: clamp(1.4rem, 3.5vw, 2.2rem);
-  --fluid-h2: clamp(1.2rem, 2.5vw, 1.75rem);
-  --fluid-body: clamp(0.85rem, 1.2vw, 0.98rem);
-}
-
-/* 1. Large Desktops & 1440px Workstations */
-@media (min-width: 1440px) {
+/* ==========================================================================
+   1. Ultra-Wide Displays & 4K Monitors (>= 1920px)
+   ========================================================================== */
+@media (min-width: 1920px) {
   .content-body {
-    max-width: 1540px;
-    padding: 36px 48px;
+    max-width: 1600px;
+    padding: 40px 48px;
   }
+
+  .landing-hero-content {
+    max-width: 1500px;
+    gap: 64px;
+  }
+
+  .landing-nav,
+  .landing-footer {
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .three-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+}
+
+/* ==========================================================================
+   2. Standard Desktop & Laptops (1200px - 1919px)
+   ========================================================================== */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .content-body {
+    max-width: 1400px;
+  }
+
   .kpi-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+
   .three-cards-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* 2. Laptops & Mid-Size Desktops (1025px - 1439px) */
-@media (max-width: 1439px) and (min-width: 1025px) {
-  .sidebar {
-    width: 260px;
-  }
-  .main-wrapper {
-    margin-left: 260px;
-  }
-  .kpi-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  .three-cards-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
-  .perspective-card {
-    padding: 22px;
-  }
-}
-
-/* 3. Small Laptops & Tablets Landscape (993px - 1024px) */
-@media (max-width: 1024px) {
+/* ==========================================================================
+   3. Small Laptops & Landscape Tablets (993px - 1199px)
+   ========================================================================== */
+@media (max-width: 1199px) and (min-width: 993px) {
   .sidebar {
     width: 250px;
   }
+
   .main-wrapper {
     margin-left: 250px;
+    width: calc(100% - 250px);
   }
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+
   .three-cards-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
+
+  .perspective-card {
+    padding: 18px 16px;
+  }
+
+  .card-code-display {
+    font-size: 1.6rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .kpi-card {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
   .fhir-builder-grid {
-    grid-template-columns: 1fr;
-  }
-  .rationale-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 340px 1fr;
+    gap: 20px;
   }
 }
 
-/* 4. Tablets & Mobile Devices (<= 992px) - Drawer Sidebar Activated */
+/* ==========================================================================
+   4. Tablets & Mobile Breakpoint (<= 992px) - Off-Canvas Drawer Activated
+   ========================================================================== */
 @media (max-width: 992px) {
+  /* Show Hamburger & Hide Desktop Sidebar Offset */
   .mobile-nav-toggle {
     display: flex !important;
   }
+
+  .sidebar-close-btn {
+    display: flex !important;
+  }
+
   .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     z-index: 100;
-    width: 280px;
-    transform: translateX(-100%);
-    box-shadow: var(--shadow-lg);
+    width: min(300px, 82vw);
+    transform: translateX(-105%);
+    box-shadow: var(--shadow-xl);
+    transition: transform var(--transition-smooth);
   }
+
   .sidebar.mobile-open {
     transform: translateX(0);
   }
+
   .main-wrapper {
     margin-left: 0 !important;
-  }
-  .topbar {
-    padding: 0 20px;
-    height: 64px;
-  }
-  .topbar-search {
-    width: 220px;
-  }
-  .content-body {
-    padding: 24px 20px;
+    width: 100% !important;
   }
 
-  /* Page Grid Stack Rules */
-  .translator-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .topbar {
+    padding: 0 16px;
+    min-height: 64px;
   }
+
+  .topbar-search {
+    width: clamp(160px, 30vw, 260px);
+  }
+
+  .content-body {
+    padding: 20px 16px;
+  }
+
+  /* Multi-column to Single Column Reflows */
+  .three-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .fhir-builder-grid,
   .concept-map-layout,
   .health-charts-grid,
   .api-explorer-grid {
     grid-template-columns: 1fr !important;
+    gap: 20px;
   }
 
-  .swap-btn-wrap {
-    margin: 8px 0;
-  }
-
-  /* Flowchart Horizontal to Vertical Flow Transformation */
+  /* Interactive Mapping Flow: Stack vertically */
   .mapping-flow-wrapper {
     flex-direction: column;
     gap: 16px;
-    padding: 20px;
+    padding: 20px 16px;
   }
+
   .flow-node {
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
   }
+
   .flow-connector {
     width: 100%;
     height: 48px;
     padding: 0;
+    min-width: auto;
   }
+
   .connector-line {
     width: 3px;
     height: 100%;
     margin: 0 auto;
   }
 
-  /* Sleek Governance Banner Mobile View */
-  .safety-disclaimer-strip {
-    padding: 10px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .connector-line::after {
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, var(--color-emerald-light), transparent);
+    animation: flowLineVertical 2.5s infinite linear;
   }
-  .gov-message {
-    flex-direction: column;
-    align-items: flex-start;
+
+  @keyframes flowLineVertical {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  /* Landing Screen Hero Tablet Reflow */
+  .landing-hero-content {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 40px 24px;
+  }
+
+  .landing-nav {
+    padding: 0 24px;
+  }
+
+  .landing-footer {
+    padding: 20px 24px;
+  }
+}
+
+/* ==========================================================================
+   5. Mobile Devices (<= 767px) - Mobile Bottom Nav & Ergonomic Reflow
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Activate Ergonomic Mobile Bottom Nav */
+  .mobile-bottom-nav {
+    display: flex !important;
+  }
+
+  /* Add bottom margin to avoid content collision with bottom nav */
+  .content-body,
+  .landing-wrapper {
+    padding-bottom: calc(var(--mobile-bottom-nav-height) + 24px) !important;
+  }
+
+  .toast-container {
+    bottom: calc(var(--mobile-bottom-nav-height) + 16px);
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+
+  .toast {
+    max-width: 100%;
+  }
+
+  /* Topbar Refinement */
+  .topbar-search {
+    display: none; /* Accessible via Terminology Search in Bottom Nav or Page */
+  }
+
+  .status-badge.fhir {
+    display: inline-flex;
+  }
+
+  .status-badge:not(.fhir) {
+    display: none;
+  }
+
+  .user-role {
+    display: none;
+  }
+
+  .user-profile {
+    padding: 2px 8px 2px 2px;
     gap: 6px;
   }
-}
 
-/* 5. Phablets & Small Tablets (641px - 768px) */
-@media (max-width: 768px) {
-  .page-title {
-    font-size: var(--fluid-h1);
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
   }
-  .hero-title {
-    font-size: var(--fluid-h1);
-  }
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-  .kpi-card {
-    padding: 16px;
+
+  /* Code Translator Grid Stack */
+  .translator-grid {
+    grid-template-columns: 1fr;
     gap: 12px;
   }
-  .kpi-icon {
-    width: 44px;
-    height: 44px;
-  }
-  .kpi-number {
-    font-size: 1.35rem;
-  }
-  .dashboard-hero {
-    padding: 28px 20px;
-  }
-  .rationale-grid {
-    grid-template-columns: 1fr;
-  }
-  .topbar-right .status-badge:not(.fhir) {
-    display: none;
-  }
-}
 
-/* 6. Mobile SmartPhones (320px - 640px) */
-@media (max-width: 640px) {
-  .topbar {
-    padding: 0 14px;
-  }
-  .topbar-search {
-    display: none;
-  }
-  .topbar-title {
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 160px;
-  }
-  .user-info {
-    display: none;
-  }
-  .user-profile {
-    padding: 2px;
-    border: none;
-  }
-  .content-body {
-    padding: 16px 12px;
+  .swap-btn-wrap {
+    margin: 4px 0;
   }
 
-  /* KPI Grid Single Column */
-  .kpi-grid {
-    grid-template-columns: 1fr;
+  .swap-btn {
+    transform: rotate(90deg);
   }
 
-  /* Centerpiece Search Container Mobile Padding */
+  .swap-btn:hover {
+    transform: rotate(270deg);
+  }
+
+  /* Centerpiece Search */
   .centerpiece-search-container {
-    padding: 20px 14px;
+    padding: 18px 14px;
     border-radius: var(--radius-lg);
   }
-  .search-section-header h2 {
-    font-size: 1.2rem;
-  }
-  .search-section-header p {
-    font-size: 0.82rem;
+
+  .main-search-input-wrap input {
+    padding: 12px 42px 12px 44px;
+    font-size: 0.92rem;
+    min-height: 48px;
   }
 
-  /* Main Input Mobile */
-  .main-search-input-wrap input {
-    padding: 14px 16px 14px 44px;
-    font-size: 0.92rem;
-  }
-  .main-search-input-wrap svg {
+  .main-search-input-wrap svg.search-icon,
+  .main-search-input-wrap i.search-icon {
     left: 14px;
     width: 18px !important;
     height: 18px !important;
   }
 
-  /* Recent Chips Flex Wrap */
+  /* Recent Chips Flex */
   .recent-searches-row {
     justify-content: flex-start;
     gap: 6px;
   }
+
   .recent-chip {
     padding: 4px 10px;
     font-size: 0.76rem;
+    min-height: 30px;
   }
 
-  /* Perspective Cards Mobile Padding */
-  .perspective-card {
-    padding: 20px 16px;
-    border-radius: var(--radius-lg);
-  }
-  .card-code-display {
-    font-size: 1.8rem;
-  }
-  .card-term-title {
-    font-size: 1rem;
-  }
-
-  /* Buttons Full Width Mobile */
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .btn-lg {
-    padding: 12px 20px;
-    font-size: 0.92rem;
-    width: 100%;
-  }
-
-  /* Table Mobile Scroll */
-  .card {
-    padding: 16px;
-    border-radius: var(--radius-lg);
-  }
-
-  /* Modals Full Width Mobile */
-  .modal-container {
-    width: 96%;
-    max-height: 94vh;
-    border-radius: var(--radius-lg);
-  }
-  .modal-header {
-    padding: 14px 16px;
-  }
-  .modal-body {
-    padding: 16px;
-  }
-  .modal-footer {
-    padding: 12px 16px;
-    flex-direction: column;
+  /* Rationale Grid Single Column */
+  .rationale-grid {
+    grid-template-columns: 1fr;
     gap: 8px;
   }
-  .modal-footer .btn {
-    width: 100%;
+
+  /* Governance Banner Mobile View */
+  .safety-disclaimer-strip {
+    padding: 10px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 
-  /* Landing Screen Mobile Adjustments */
+  .gov-message {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 0.78rem;
+  }
+
+  .gov-meta-tag {
+    font-size: 0.7rem;
+  }
+
+  /* Landing Screen Hero */
   .landing-nav {
     padding: 0 16px;
     height: 64px;
   }
-  .landing-hero-content {
-    grid-template-columns: 1fr;
-    padding: 32px 16px;
-    gap: 32px;
+
+  .landing-brand .tagline {
+    display: none;
   }
+
   .landing-title {
-    font-size: 2rem;
+    font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
   }
+
   .landing-desc {
-    font-size: 0.95rem;
+    font-size: 0.95rem !important;
   }
-  .flow-visual-card {
-    padding: 20px 16px;
-  }
+
   .landing-footer {
     padding: 16px;
     flex-direction: column;
@@ -324,15 +369,132 @@
   }
 }
 
-/* 7. Extra Small Micro Screens (<= 380px) */
-@media (max-width: 380px) {
-  .topbar-right .status-badge {
-    display: none;
+/* ==========================================================================
+   6. Compact Smartphones (<= 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .content-body {
+    padding: 14px 10px;
   }
-  .brand-title .tagline {
-    display: none;
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
+
+  .kpi-card {
+    padding: 14px;
+  }
+
+  .kpi-number {
+    font-size: 1.35rem;
+  }
+
+  .dashboard-hero {
+    padding: 20px 14px;
+    border-radius: var(--radius-lg);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .perspective-card {
+    padding: 16px 12px;
+    border-radius: var(--radius-lg);
+  }
+
   .card-code-display {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+  }
+
+  .card-term-title {
+    font-size: 0.98rem;
+  }
+
+  /* Modal Full Width on Mobile */
+  .modal-overlay {
+    padding: 8px;
+  }
+
+  .modal-container {
+    max-height: 94vh;
+    max-height: 94dvh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-header {
+    padding: 14px 16px;
+  }
+
+  .modal-body {
+    padding: 14px 16px;
+  }
+
+  .modal-footer {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  .btn-lg {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+}
+
+/* ==========================================================================
+   7. Micro / Very Small Screens (320px - 375px)
+   ========================================================================== */
+@media (max-width: 375px) {
+  html {
+    font-size: 15px;
+  }
+
+  .topbar {
+    padding: 0 10px;
+  }
+
+  .topbar-title {
+    font-size: 0.92rem;
+    max-width: 130px;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .user-profile {
+    border: none;
+    padding: 0;
+    background: transparent;
+  }
+
+  .card-code-display {
+    font-size: 1.35rem;
+  }
+
+  .flow-node {
+    padding: 10px 12px;
+  }
+
+  .flow-node .node-code {
+    font-size: 1rem;
+  }
+
+  .code-chip {
+    font-size: 0.68rem;
+    padding: 2px 6px;
   }
 }

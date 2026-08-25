@@ -16,15 +16,22 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="app-container">
   <!-- Left Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Sidebar Navigation">
     <div class="sidebar-header">
-      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
-      <div class="brand-title">
-        <span class="name">Ayu<span>Sutra</span></span>
-        <span class="tagline">Terminology Platform</span>
-      </div>
+      <a href="dashboard.html" class="sidebar-brand-wrap">
+        <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+        <div class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </div>
+      </a>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Navigation">
+        <i data-lucide="x"></i>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Clinical Workspace</div>
@@ -53,7 +60,7 @@
   <div class="main-wrapper">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" title="Toggle Menu">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation drawer" title="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
         <h1 class="topbar-title">Audit Trail & Provenance Log</h1>
@@ -82,7 +89,7 @@
       </div>
     </div>
 
-    <main class="content-body">
+    <main class="content-body" id="main-content">
       <div class="page-header">
         <h1 class="page-title">Clinical Audit Timeline</h1>
         <p class="page-subtitle">Chronological ledger recording clinical mapping actions, user identity, and FHIR provenance metadata.</p>
@@ -90,101 +97,101 @@
 
       <!-- Audit Timeline List -->
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy)">Session Audit Log (Patient: Rahul Mehta)</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:8px;">
+          <h2 style="font-size:1.05rem; font-weight:800; color:var(--color-navy)">Session Audit Log (Patient: Rahul Mehta)</h2>
           <button class="btn btn-sm btn-outline" onclick="showToast('Exported audit trail CSV', 'info')">
             <i data-lucide="download"></i> Export Audit Log
           </button>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:20px; position:relative; padding-left:24px; border-left:2px dashed var(--border-emerald);">
+        <div style="display:flex; flex-direction:column; gap:20px; position:relative; padding-left:20px; border-left:2px dashed var(--border-emerald); margin-left:8px;">
           
           <!-- Event 1 -->
           <div style="position:relative;">
-            <div style="position:absolute; left:-33px; top:0; width:16px; height:16px; background:var(--color-forest); border-radius:50%; border:3px solid #FFF;"></div>
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;">17:42:13</span>
-                <span style="font-weight:800; font-size:1rem; color:var(--color-navy); margin-left:10px;">Diagnosis Searched</span>
+            <div style="position:absolute; left:-29px; top:2px; width:16px; height:16px; background:var(--color-forest); border-radius:50%; border:3px solid #FFF; box-shadow:var(--shadow-xs);"></div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.75rem; min-height:auto; padding:3px 8px;">17:42:13</span>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--color-navy);">Diagnosis Searched</span>
               </div>
               <span class="status-badge">Dr. Ananya Sharma</span>
             </div>
-            <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:6px;">
+            <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:5px;">
               Searched term <strong>"Amavata"</strong> in clinical workstation. System returned NAMASTE N12345.
             </div>
-            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+            <div style="font-size:0.74rem; color:var(--text-muted); margin-top:3px;">
               Source: NAMASTE Engine • Mapping Version: v2026.08
             </div>
           </div>
 
           <!-- Event 2 -->
           <div style="position:relative;">
-            <div style="position:absolute; left:-33px; top:0; width:16px; height:16px; background:var(--color-teal); border-radius:50%; border:3px solid #FFF;"></div>
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;">17:42:15</span>
-                <span style="font-weight:800; font-size:1rem; color:var(--color-navy); margin-left:10px;">Mapping Retrieved</span>
+            <div style="position:absolute; left:-29px; top:2px; width:16px; height:16px; background:var(--color-teal); border-radius:50%; border:3px solid #FFF; box-shadow:var(--shadow-xs);"></div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.75rem; min-height:auto; padding:3px 8px;">17:42:15</span>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--color-navy);">Mapping Retrieved</span>
               </div>
               <span class="status-badge" style="background:#E0F2FE; color:var(--color-teal)">System Auto-Lookup</span>
             </div>
-            <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:6px;">
+            <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:5px;">
               Retrieved mapping <strong>NAMASTE (N12345) ➔ TM2 (TXXA1.2)</strong> [Relationship: ExactMatch].
             </div>
-            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+            <div style="font-size:0.74rem; color:var(--text-muted); margin-top:3px;">
               Source: ConceptMap Engine • Provenance: WHO / Ministry of AYUSH
             </div>
           </div>
 
           <!-- Event 3 -->
           <div style="position:relative;">
-            <div style="position:absolute; left:-33px; top:0; width:16px; height:16px; background:var(--color-emerald); border-radius:50%; border:3px solid #FFF;"></div>
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;">17:42:18</span>
-                <span style="font-weight:800; font-size:1rem; color:var(--color-navy); margin-left:10px;">Doctor Confirmed Mapping</span>
+            <div style="position:absolute; left:-29px; top:2px; width:16px; height:16px; background:var(--color-emerald); border-radius:50%; border:3px solid #FFF; box-shadow:var(--shadow-xs);"></div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.75rem; min-height:auto; padding:3px 8px;">17:42:18</span>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--color-navy);">Doctor Confirmed Mapping</span>
               </div>
               <span class="status-badge">Dr. Ananya Sharma</span>
             </div>
-            <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:6px;">
+            <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:5px;">
               Doctor reviewed and confirmed mapping relationship for Patient Rahul Mehta (ABHA: 91-8472-9012-3456).
             </div>
-            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+            <div style="font-size:0.74rem; color:var(--text-muted); margin-top:3px;">
               Action: Provenance Signed • Clinical Judgment Verified
             </div>
           </div>
 
           <!-- Event 4 -->
           <div style="position:relative;">
-            <div style="position:absolute; left:-33px; top:0; width:16px; height:16px; background:var(--color-blue); border-radius:50%; border:3px solid #FFF;"></div>
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;">17:42:21</span>
-                <span style="font-weight:800; font-size:1rem; color:var(--color-navy); margin-left:10px;">FHIR Condition Generated</span>
+            <div style="position:absolute; left:-29px; top:2px; width:16px; height:16px; background:var(--color-blue); border-radius:50%; border:3px solid #FFF; box-shadow:var(--shadow-xs);"></div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.75rem; min-height:auto; padding:3px 8px;">17:42:21</span>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--color-navy);">FHIR Condition Generated</span>
               </div>
               <span class="status-badge fhir">FHIR Encoder</span>
             </div>
-            <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:6px;">
+            <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:5px;">
               Generated FHIR Condition Resource <code>ayusutra-cond-981240</code> validated against NRCES profile.
             </div>
-            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+            <div style="font-size:0.74rem; color:var(--text-muted); margin-top:3px;">
               Validation: 100% Pass Rate • Standard: FHIR R4 v4.0.1
             </div>
           </div>
 
           <!-- Event 5 -->
           <div style="position:relative;">
-            <div style="position:absolute; left:-33px; top:0; width:16px; height:16px; background:var(--status-success); border-radius:50%; border:3px solid #FFF;"></div>
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;">17:42:22</span>
-                <span style="font-weight:800; font-size:1rem; color:var(--color-navy); margin-left:10px;">Record Saved</span>
+            <div style="position:absolute; left:-29px; top:2px; width:16px; height:16px; background:var(--status-success); border-radius:50%; border:3px solid #FFF; box-shadow:var(--shadow-xs);"></div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="recent-chip" style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.75rem; min-height:auto; padding:3px 8px;">17:42:22</span>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--color-navy);">Record Saved</span>
               </div>
               <span class="status-badge">Dr. Ananya Sharma</span>
             </div>
-            <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:6px;">
+            <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:5px;">
               Record successfully committed to ABDM Patient Problem List repository.
             </div>
-            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+            <div style="font-size:0.74rem; color:var(--text-muted); margin-top:3px;">
               Hash: <code>0x9f8b...3e12</code> • Status: Persisted
             </div>
           </div>
@@ -195,8 +202,34 @@
   </div>
 </div>
 
+<!-- Ergonomic Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+  <a href="dashboard.html" class="mobile-bottom-item">
+    <i data-lucide="layout-dashboard"></i>
+    <span>Overview</span>
+  </a>
+  <a href="terminology.html" class="mobile-bottom-item">
+    <i data-lucide="search"></i>
+    <span>Search</span>
+  </a>
+  <a href="translate.html" class="mobile-bottom-item">
+    <i data-lucide="repeat"></i>
+    <span>Translate</span>
+  </a>
+  <a href="fhir.html" class="mobile-bottom-item">
+    <i data-lucide="file-code"></i>
+    <span>FHIR R4</span>
+  </a>
+  <a href="#" class="mobile-bottom-item mobile-bottom-more">
+    <i data-lucide="menu"></i>
+    <span>More</span>
+  </a>
+</nav>
+
 <script>
-  lucide.createIcons();
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 </script>
 </body>
 </html>

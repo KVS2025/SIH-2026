@@ -17,15 +17,22 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="app-container">
   <!-- Left Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Sidebar Navigation">
     <div class="sidebar-header">
-      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
-      <div class="brand-title">
-        <span class="name">Ayu<span>Sutra</span></span>
-        <span class="tagline">Terminology Platform</span>
-      </div>
+      <a href="dashboard.html" class="sidebar-brand-wrap">
+        <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+        <div class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </div>
+      </a>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Navigation">
+        <i data-lucide="x"></i>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Clinical Workspace</div>
@@ -54,7 +61,7 @@
   <div class="main-wrapper">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" title="Toggle Menu">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation drawer" title="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
         <h1 class="topbar-title">Terminology Search Catalog</h1>
@@ -83,21 +90,21 @@
       </div>
     </div>
 
-    <main class="content-body">
+    <main class="content-body" id="main-content">
       <div class="page-header">
         <h1 class="page-title">Unified Terminology Catalog</h1>
         <p class="page-subtitle">Search and compare concepts across NAMASTE, WHO ICD-11 TM2, and ICD-11 Biomedical MMS.</p>
       </div>
 
       <!-- Filters & Catalog Grid -->
-      <div class="card" style="margin-bottom:28px;">
-        <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:16px; align-items:center;">
-          <div class="main-search-input-wrap" style="margin:0;">
+      <div class="card" style="margin-bottom:24px;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; align-items:center;">
+          <div class="main-search-input-wrap" style="margin:0; max-width:none;">
             <i data-lucide="search" class="search-icon"></i>
-            <input type="text" id="catalog-search" placeholder="Filter by concept name, code, or keyword..." style="font-size:0.95rem; padding-top:12px; padding-bottom:12px;">
+            <input type="text" id="catalog-search" placeholder="Filter by concept name, code, or keyword..." style="font-size:0.9rem; padding:10px 14px 10px 42px; min-height:44px;" aria-label="Filter Catalog">
           </div>
           <div>
-            <select class="form-select" id="filter-system">
+            <select class="form-select" id="filter-system" aria-label="Filter System">
               <option value="all">All Terminology Systems</option>
               <option value="ayurveda">Ayurveda (NAMASTE)</option>
               <option value="tm2">WHO ICD-11 TM2</option>
@@ -105,7 +112,7 @@
             </select>
           </div>
           <div>
-            <select class="form-select" id="filter-mapping-status">
+            <select class="form-select" id="filter-mapping-status" aria-label="Filter Mapping Status">
               <option value="all">All Mapping Statuses</option>
               <option value="exact">Exact Match</option>
               <option value="related">Related / Broader</option>
@@ -117,15 +124,15 @@
 
       <!-- Results Table / Cards -->
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy)">Catalog Concepts (9 Active Demo Items)</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+          <h3 style="font-size:1.05rem; font-weight:800; color:var(--color-navy)">Catalog Concepts (5 Active Demo Items)</h3>
           <span class="status-badge" style="background:var(--bg-sage); color:var(--color-forest)">Synced 2026.08</span>
         </div>
 
-        <div style="overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
+        <div class="table-responsive-container">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.86rem;">
             <thead>
-              <tr style="border-bottom:2px solid var(--border-light); color:var(--text-muted); font-size:0.78rem; text-transform:uppercase;">
+              <tr style="border-bottom:2px solid var(--border-light); color:var(--text-muted); font-size:0.75rem; text-transform:uppercase;">
                 <th style="padding:12px;">Diagnosis / Concept</th>
                 <th style="padding:12px;">NAMASTE Code</th>
                 <th style="padding:12px;">WHO TM2 Code</th>
@@ -145,8 +152,34 @@
   </div>
 </div>
 
+<!-- Ergonomic Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+  <a href="dashboard.html" class="mobile-bottom-item">
+    <i data-lucide="layout-dashboard"></i>
+    <span>Overview</span>
+  </a>
+  <a href="terminology.html" class="mobile-bottom-item active">
+    <i data-lucide="search"></i>
+    <span>Search</span>
+  </a>
+  <a href="translate.html" class="mobile-bottom-item">
+    <i data-lucide="repeat"></i>
+    <span>Translate</span>
+  </a>
+  <a href="fhir.html" class="mobile-bottom-item">
+    <i data-lucide="file-code"></i>
+    <span>FHIR R4</span>
+  </a>
+  <a href="#" class="mobile-bottom-item mobile-bottom-more">
+    <i data-lucide="menu"></i>
+    <span>More</span>
+  </a>
+</nav>
+
 <script>
-  lucide.createIcons();
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 
   document.addEventListener("DOMContentLoaded", async () => {
     const diagnoses = await window.api.searchTerminology("");
@@ -175,23 +208,23 @@
       const tr = document.createElement("tr");
       tr.style.borderBottom = "1px solid var(--border-light)";
       tr.innerHTML = `
-        <td style="padding:16px;">
-          <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">${item.name}</div>
-          <div style="font-size:0.78rem; color:var(--text-muted)">${item.systemCategory}</div>
+        <td style="padding:14px 12px;">
+          <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">${item.name}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted)">${item.systemCategory}</div>
         </td>
-        <td style="padding:16px;">
+        <td style="padding:14px 12px;">
           <span class="code-chip namaste">${item.namaste.code}</span>
         </td>
-        <td style="padding:16px;">
+        <td style="padding:14px 12px;">
           <span class="code-chip tm2">${item.tm2.code}</span>
         </td>
-        <td style="padding:16px;">
+        <td style="padding:14px 12px;">
           <span class="code-chip icd11">${item.biomedical.hasEquivalent ? item.biomedical.code : 'NO DIRECT MAP'}</span>
         </td>
-        <td style="padding:16px;">
+        <td style="padding:14px 12px;">
           <span class="relationship-badge ${item.tm2.relationship === 'Exact' ? 'exact' : 'related'}">${item.tm2.relationship}</span>
         </td>
-        <td style="padding:16px; text-align:right;">
+        <td style="padding:14px 12px; text-align:right;">
           <a href="dashboard.html?diag=${encodeURIComponent(item.name)}" class="btn btn-sm btn-secondary">
             Inspect <i data-lucide="arrow-right"></i>
           </a>
@@ -200,7 +233,7 @@
       tbody.appendChild(tr);
     });
 
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
   }
 </script>
 </body>

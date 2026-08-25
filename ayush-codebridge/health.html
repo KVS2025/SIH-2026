@@ -19,15 +19,22 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="app-container">
   <!-- Left Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Sidebar Navigation">
     <div class="sidebar-header">
-      <div class="brand-logo-icon"><i data-lucide="network"></i></div>
-      <div class="brand-title">
-        <span class="name">Ayu<span>Sutra</span></span>
-        <span class="tagline">Terminology Platform</span>
-      </div>
+      <a href="dashboard.html" class="sidebar-brand-wrap">
+        <div class="brand-logo-icon"><i data-lucide="network"></i></div>
+        <div class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </div>
+      </a>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Navigation">
+        <i data-lucide="x"></i>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Clinical Workspace</div>
@@ -56,13 +63,13 @@
   <div class="main-wrapper">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" title="Toggle Menu">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation drawer" title="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
-        <h1 class="topbar-title">System Health & Performance Monitoring</h1>
+        <h1 class="topbar-title">System Health & Telemetry</h1>
       </div>
       <div class="topbar-right">
-        <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Systems 100% Operational</span>
+        <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Systems Operational</span>
         <div class="user-profile">
           <div class="user-avatar">AS</div>
           <div class="user-info">
@@ -85,82 +92,82 @@
       </div>
     </div>
 
-    <main class="content-body">
+    <main class="content-body" id="main-content">
       <div class="page-header">
         <h1 class="page-title">System Status & Infrastructure Metrics</h1>
         <p class="page-subtitle">Real-time health telemetry across terminology servers, API gateways, and FHIR engines.</p>
       </div>
 
       <!-- Service Status Grid -->
-      <div class="card" style="margin-bottom:32px;">
-        <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-navy); margin-bottom:20px;">System Services Telemetry</h3>
+      <div class="card" style="margin-bottom:24px;">
+        <h2 style="font-size:1.05rem; font-weight:800; color:var(--color-navy); margin-bottom:16px;">System Services Telemetry</h2>
         
-        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:18px;">
-          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
+          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">WHO ICD-11 API</div>
-              <div style="font-size:0.75rem; color:var(--text-muted)">Latency: 48ms • Uptime: 99.98%</div>
+              <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">WHO ICD-11 API</div>
+              <div style="font-size:0.74rem; color:var(--text-muted)">Latency: 48ms • Uptime: 99.98%</div>
             </div>
-            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Operational</span>
+            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Active</span>
           </div>
 
-          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">NAMASTE Dataset</div>
-              <div style="font-size:0.75rem; color:var(--text-muted)">Latency: 12ms • Uptime: 100.0%</div>
+              <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">NAMASTE Dataset</div>
+              <div style="font-size:0.74rem; color:var(--text-muted)">Latency: 12ms • Uptime: 100.0%</div>
             </div>
-            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Operational</span>
+            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Active</span>
           </div>
 
-          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">FHIR Server</div>
-              <div style="font-size:0.75rem; color:var(--text-muted)">Latency: 22ms • Uptime: 99.95%</div>
+              <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">FHIR Server</div>
+              <div style="font-size:0.74rem; color:var(--text-muted)">Latency: 22ms • Uptime: 99.95%</div>
             </div>
-            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Operational</span>
+            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Active</span>
           </div>
 
-          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">Terminology DB</div>
-              <div style="font-size:0.75rem; color:var(--text-muted)">Latency: 18ms • Uptime: 100.0%</div>
+              <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">Terminology DB</div>
+              <div style="font-size:0.74rem; color:var(--text-muted)">Latency: 18ms • Uptime: 100.0%</div>
             </div>
-            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Operational</span>
+            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Active</span>
           </div>
 
-          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">Search Engine</div>
-              <div style="font-size:0.75rem; color:var(--text-muted)">Latency: 15ms • Uptime: 99.99%</div>
+              <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">Search Engine</div>
+              <div style="font-size:0.74rem; color:var(--text-muted)">Latency: 15ms • Uptime: 99.99%</div>
             </div>
-            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Operational</span>
+            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Active</span>
           </div>
 
-          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="rationale-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight:700; color:var(--color-navy); font-size:0.95rem;">API Gateway</div>
-              <div style="font-size:0.75rem; color:var(--text-muted)">Latency: 9ms • Uptime: 100.0%</div>
+              <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">API Gateway</div>
+              <div style="font-size:0.74rem; color:var(--text-muted)">Latency: 9ms • Uptime: 100.0%</div>
             </div>
-            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Operational</span>
+            <span class="status-badge" style="background:#DCFCE7; color:#15803D;">● Active</span>
           </div>
         </div>
       </div>
 
       <!-- Chart Visualizations Grid -->
-      <div class="health-charts-grid" style="display:grid; grid-template-columns: 2fr 1fr; gap:24px; margin-bottom:32px;">
+      <div class="health-charts-grid" style="display:grid; grid-template-columns: 1.8fr 1.2fr; gap:20px; margin-bottom:24px;">
         
         <!-- API Traffic & Latency Chart -->
         <div class="card">
-          <h3 style="font-size:1.05rem; font-weight:800; color:var(--color-navy); margin-bottom:16px;">API Requests & Response Latency (24h)</h3>
-          <div style="height:280px; position:relative;">
+          <h2 style="font-size:1rem; font-weight:800; color:var(--color-navy); margin-bottom:14px;">API Requests & Response Latency (24h)</h2>
+          <div style="height:clamp(220px, 32vh, 280px); position:relative; width:100%;">
             <canvas id="chart-api-traffic"></canvas>
           </div>
         </div>
 
         <!-- Translation Distribution Chart -->
         <div class="card">
-          <h3 style="font-size:1.05rem; font-weight:800; color:var(--color-navy); margin-bottom:16px;">Mapping Type Distribution</h3>
-          <div style="height:280px; position:relative;">
+          <h2 style="font-size:1rem; font-weight:800; color:var(--color-navy); margin-bottom:14px;">Mapping Type Distribution</h2>
+          <div style="height:clamp(220px, 32vh, 280px); position:relative; width:100%;">
             <canvas id="chart-translation-dist"></canvas>
           </div>
         </div>
@@ -169,8 +176,8 @@
 
       <!-- Search Volume Chart -->
       <div class="card">
-        <h3 style="font-size:1.05rem; font-weight:800; color:var(--color-navy); margin-bottom:16px;">Search Volume by Terminology System</h3>
-        <div style="height:240px; position:relative;">
+        <h2 style="font-size:1rem; font-weight:800; color:var(--color-navy); margin-bottom:14px;">Search Volume by Terminology System</h2>
+        <div style="height:clamp(200px, 30vh, 250px); position:relative; width:100%;">
           <canvas id="chart-search-volume"></canvas>
         </div>
       </div>
@@ -179,8 +186,34 @@
   </div>
 </div>
 
+<!-- Ergonomic Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+  <a href="dashboard.html" class="mobile-bottom-item">
+    <i data-lucide="layout-dashboard"></i>
+    <span>Overview</span>
+  </a>
+  <a href="terminology.html" class="mobile-bottom-item">
+    <i data-lucide="search"></i>
+    <span>Search</span>
+  </a>
+  <a href="translate.html" class="mobile-bottom-item">
+    <i data-lucide="repeat"></i>
+    <span>Translate</span>
+  </a>
+  <a href="fhir.html" class="mobile-bottom-item">
+    <i data-lucide="file-code"></i>
+    <span>FHIR R4</span>
+  </a>
+  <a href="#" class="mobile-bottom-item mobile-bottom-more">
+    <i data-lucide="menu"></i>
+    <span>More</span>
+  </a>
+</nav>
+
 <script>
-  lucide.createIcons();
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 </script>
 </body>
 </html>

@@ -27,17 +27,24 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="app-container">
   <!-- Left Sidebar Navigation -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Sidebar Navigation">
     <div class="sidebar-header">
-      <div class="brand-logo-icon">
-        <i data-lucide="network"></i>
-      </div>
-      <div class="brand-title">
-        <span class="name">Ayu<span>Sutra</span></span>
-        <span class="tagline">Terminology Platform</span>
-      </div>
+      <a href="dashboard.html" class="sidebar-brand-wrap">
+        <div class="brand-logo-icon">
+          <i data-lucide="network"></i>
+        </div>
+        <div class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </div>
+      </a>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Navigation">
+        <i data-lucide="x"></i>
+      </button>
     </div>
 
     <nav class="sidebar-nav">
@@ -89,7 +96,7 @@
     <!-- Top Navigation Bar -->
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" title="Toggle Menu">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation drawer" title="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
         <h1 class="topbar-title">Overview Dashboard</h1>
@@ -97,7 +104,7 @@
 
       <div class="topbar-search">
         <i data-lucide="search" class="search-icon"></i>
-        <input type="text" placeholder="Quick search concept or code..." onclick="window.location.href='terminology.html'">
+        <input type="text" placeholder="Quick search concept or code..." onclick="window.location.href='terminology.html'" aria-label="Quick Search">
       </div>
 
       <div class="topbar-right">
@@ -106,12 +113,12 @@
         </span>
         <span class="status-badge fhir">FHIR R4</span>
 
-        <button class="notification-btn" title="Notifications" onclick="showToast('No new terminology updates', 'info')">
+        <button class="notification-btn" title="Notifications" onclick="showToast('No new terminology updates', 'info')" aria-label="Notifications">
           <i data-lucide="bell"></i>
           <span class="notification-dot"></span>
         </button>
 
-        <div class="user-profile">
+        <div class="user-profile" title="Clinician Profile">
           <div class="user-avatar">AS</div>
           <div class="user-info">
             <span class="user-name">Dr. Ananya Sharma</span>
@@ -135,14 +142,14 @@
     </div>
 
     <!-- Content Body -->
-    <main class="content-body">
+    <main class="content-body" id="main-content">
       
       <!-- Hero Section -->
       <section class="dashboard-hero">
         <div class="hero-tag">
           <i data-lucide="sparkles"></i> Interoperable Healthcare Infrastructure
         </div>
-        <h1 class="hero-title">Clinical terminology, finally connected.</h1>
+        <h2 class="hero-title">Clinical terminology, finally connected.</h2>
         <p class="hero-subtitle">
           Search once. Map intelligently. Record once. Interoperate everywhere. Connecting NAMASTE, WHO ICD-11 TM2, and Biomedical ICD-11 seamlessly via AyuSutra.
         </p>
@@ -157,7 +164,7 @@
       </section>
 
       <!-- KPI Grid Cards -->
-      <section class="kpi-grid">
+      <section class="kpi-grid" aria-label="System Metrics">
         <div class="kpi-card">
           <div class="kpi-icon namaste"><i data-lucide="book-marked"></i></div>
           <div class="kpi-content">
@@ -204,8 +211,8 @@
 
         <div class="main-search-input-wrap">
           <i data-lucide="search" class="search-icon"></i>
-          <input type="text" id="main-diag-search" placeholder='Search diagnosis, symptom, NAMASTE code or ICD-11 code... (Try "Amavata")' autocomplete="off">
-          <button type="button" class="search-clear-btn" id="search-clear-btn"><i data-lucide="x"></i></button>
+          <input type="text" id="main-diag-search" placeholder='Search diagnosis, symptom, NAMASTE code or ICD-11 code... (Try "Amavata")' autocomplete="off" aria-label="Search Diagnosis">
+          <button type="button" class="search-clear-btn" id="search-clear-btn" aria-label="Clear Search"><i data-lucide="x"></i></button>
 
           <!-- Autocomplete Dropdown -->
           <div class="autocomplete-dropdown" id="search-autocomplete-dropdown"></div>
@@ -213,11 +220,11 @@
 
         <div class="recent-searches-row">
           <span class="recent-searches-label">Try recent searches:</span>
-          <button class="recent-chip" data-term="Amavata">Amavata</button>
-          <button class="recent-chip" data-term="Kasa">Kasa</button>
-          <button class="recent-chip" data-term="Arsha">Arsha</button>
-          <button class="recent-chip" data-term="Prameha">Prameha</button>
-          <button class="recent-chip" data-term="Vata-Kaphaja Gulma">Vata-Kaphaja Gulma (No Map Demo)</button>
+          <button type="button" class="recent-chip" data-term="Amavata">Amavata</button>
+          <button type="button" class="recent-chip" data-term="Kasa">Kasa</button>
+          <button type="button" class="recent-chip" data-term="Arsha">Arsha</button>
+          <button type="button" class="recent-chip" data-term="Prameha">Prameha</button>
+          <button type="button" class="recent-chip" data-term="Vata-Kaphaja Gulma">Vata-Kaphaja Gulma (No Map Demo)</button>
         </div>
       </section>
 
@@ -379,7 +386,7 @@
         </div>
 
         <!-- Quick Action Bar -->
-        <div style="margin-top:28px; display:flex; justify-content:flex-end; gap:16px;">
+        <div style="margin-top:24px; display:flex; justify-content:flex-end; gap:14px; flex-wrap:wrap;">
           <a href="fhir.html" class="btn btn-primary btn-lg" style="background:#14532D;">
             <i data-lucide="file-check"></i> Create FHIR Clinical Record for this Diagnosis
           </a>
@@ -391,12 +398,36 @@
   </div>
 </div>
 
+<!-- Ergonomic Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+  <a href="dashboard.html" class="mobile-bottom-item active">
+    <i data-lucide="layout-dashboard"></i>
+    <span>Overview</span>
+  </a>
+  <a href="terminology.html" class="mobile-bottom-item">
+    <i data-lucide="search"></i>
+    <span>Search</span>
+  </a>
+  <a href="translate.html" class="mobile-bottom-item">
+    <i data-lucide="repeat"></i>
+    <span>Translate</span>
+  </a>
+  <a href="fhir.html" class="mobile-bottom-item">
+    <i data-lucide="file-code"></i>
+    <span>FHIR R4</span>
+  </a>
+  <a href="#" class="mobile-bottom-item mobile-bottom-more">
+    <i data-lucide="menu"></i>
+    <span>More</span>
+  </a>
+</nav>
+
 <!-- Modal for FHIR JSON Preview -->
-<div class="modal-overlay" id="modal-fhir-json">
+<div class="modal-overlay" id="modal-fhir-json" role="dialog" aria-modal="true" aria-labelledby="modal-fhir-title">
   <div class="modal-container">
     <div class="modal-header">
-      <div class="modal-title">Generated FHIR R4 Condition Resource</div>
-      <button class="modal-close" onclick="closeModal('modal-fhir-json')">&times;</button>
+      <div class="modal-title" id="modal-fhir-title">Generated FHIR R4 Condition Resource</div>
+      <button class="modal-close" onclick="closeModal('modal-fhir-json')" aria-label="Close dialog">&times;</button>
     </div>
     <div class="modal-body">
       <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">
@@ -416,7 +447,9 @@
 </div>
 
 <script>
-  lucide.createIcons();
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 </script>
 </body>
 </html>
