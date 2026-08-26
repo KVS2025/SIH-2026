@@ -97,57 +97,59 @@
         <p class="page-subtitle">Search and compare concepts across NAMASTE, WHO ICD-11 TM2, and ICD-11 Biomedical MMS.</p>
       </div>
 
-      <!-- Filters & Catalog Grid -->
-      <div class="card" style="margin-bottom:24px;">
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; align-items:center;">
-          <div class="main-search-input-wrap" style="margin:0; max-width:none;">
-            <i data-lucide="search" class="search-icon"></i>
-            <input type="text" id="catalog-search" placeholder="Filter by concept name, code, or keyword..." style="font-size:0.9rem; padding:10px 14px 10px 42px; min-height:44px;" aria-label="Filter Catalog">
+      <section class="catalog-workspace" aria-labelledby="catalog-title">
+        <div class="catalog-toolbar">
+          <div class="catalog-search-field">
+            <i data-lucide="search" aria-hidden="true"></i>
+            <input type="search" id="catalog-search" placeholder="Search concepts..." aria-label="Search concepts">
           </div>
-          <div>
-            <select class="form-select" id="filter-system" aria-label="Filter System">
-              <option value="all">All Terminology Systems</option>
-              <option value="ayurveda">Ayurveda (NAMASTE)</option>
-              <option value="tm2">WHO ICD-11 TM2</option>
-              <option value="icd11">ICD-11 Biomedical</option>
-            </select>
-          </div>
-          <div>
-            <select class="form-select" id="filter-mapping-status" aria-label="Filter Mapping Status">
-              <option value="all">All Mapping Statuses</option>
-              <option value="exact">Exact Match</option>
-              <option value="related">Related / Broader</option>
-              <option value="nomap">No Direct Equivalent</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Results Table / Cards -->
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
-          <h3 style="font-size:1.05rem; font-weight:800; color:var(--color-navy)">Catalog Concepts (5 Active Demo Items)</h3>
-          <span class="status-badge" style="background:var(--bg-sage); color:var(--color-forest)">Synced 2026.08</span>
+          <select class="catalog-filter" id="filter-status" aria-label="Filter by status">
+            <option value="all">Status</option>
+            <option value="active">Active</option>
+            <option value="review">Needs review</option>
+          </select>
+          <select class="catalog-filter" id="filter-category" aria-label="Filter by category">
+            <option value="all">Category</option>
+          </select>
+          <select class="catalog-filter" id="filter-source" aria-label="Filter by source">
+            <option value="all">Source</option>
+          </select>
         </div>
 
-        <div class="table-responsive-container">
-          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.86rem;">
-            <thead>
-              <tr style="border-bottom:2px solid var(--border-light); color:var(--text-muted); font-size:0.75rem; text-transform:uppercase;">
-                <th style="padding:12px;">Diagnosis / Concept</th>
-                <th style="padding:12px;">NAMASTE Code</th>
-                <th style="padding:12px;">WHO TM2 Code</th>
-                <th style="padding:12px;">ICD-11 Biomedical</th>
-                <th style="padding:12px;">Relationship</th>
-                <th style="padding:12px; text-align:right;">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="catalog-table-body">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <section class="catalog-panel">
+          <header class="catalog-panel-header">
+            <div>
+              <h2 id="catalog-title">Catalog Concepts</h2>
+              <span id="catalog-count" class="catalog-count">40 concepts</span>
+            </div>
+            <span class="catalog-sync-badge"><span aria-hidden="true">●</span> Synced 2026.08</span>
+          </header>
+
+          <div class="catalog-table-wrapper">
+            <table class="catalog-table">
+              <colgroup>
+                <col class="catalog-col-concept">
+                <col class="catalog-col-sanskrit">
+                <col class="catalog-col-code">
+                <col class="catalog-col-code">
+                <col class="catalog-col-definition">
+                <col class="catalog-col-actions">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Diagnostic Concept</th>
+                  <th>Sanskrit Term</th>
+                  <th>NAMASTE Code</th>
+                  <th>WHO TM2 Code</th>
+                  <th>Definition</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="catalog-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
 
     </main>
   </div>
@@ -177,65 +179,5 @@
   </a>
 </nav>
 
-<script>
-  if (window.lucide) {
-    lucide.createIcons();
-  }
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    const diagnoses = await window.api.searchTerminology("");
-    renderCatalogTable(diagnoses);
-
-    const searchInput = document.getElementById("catalog-search");
-    if (searchInput) {
-      searchInput.addEventListener("input", async (e) => {
-        const filtered = await window.api.searchTerminology(e.target.value);
-        renderCatalogTable(filtered);
-      });
-    }
-  });
-
-  function renderCatalogTable(items) {
-    const tbody = document.getElementById("catalog-table-body");
-    if (!tbody) return;
-    tbody.innerHTML = "";
-
-    if (items.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="padding:24px; text-align:center; color:var(--text-muted)">No matching terminology records found.</td></tr>`;
-      return;
-    }
-
-    items.forEach(item => {
-      const tr = document.createElement("tr");
-      tr.style.borderBottom = "1px solid var(--border-light)";
-      tr.innerHTML = `
-        <td style="padding:14px 12px;">
-          <div style="font-weight:700; color:var(--color-navy); font-size:0.92rem;">${item.name}</div>
-          <div style="font-size:0.75rem; color:var(--text-muted)">${item.systemCategory}</div>
-        </td>
-        <td style="padding:14px 12px;">
-          <span class="code-chip namaste">${item.namaste.code}</span>
-        </td>
-        <td style="padding:14px 12px;">
-          <span class="code-chip tm2">${item.tm2.code}</span>
-        </td>
-        <td style="padding:14px 12px;">
-          <span class="code-chip icd11">${item.biomedical.hasEquivalent ? item.biomedical.code : 'NO DIRECT MAP'}</span>
-        </td>
-        <td style="padding:14px 12px;">
-          <span class="relationship-badge ${item.tm2.relationship === 'Exact' ? 'exact' : 'related'}">${item.tm2.relationship}</span>
-        </td>
-        <td style="padding:14px 12px; text-align:right;">
-          <a href="dashboard.html?diag=${encodeURIComponent(item.name)}" class="btn btn-sm btn-secondary">
-            Inspect <i data-lucide="arrow-right"></i>
-          </a>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    if (window.lucide) lucide.createIcons();
-  }
-</script>
 </body>
 </html>

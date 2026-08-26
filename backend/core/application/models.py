@@ -21,6 +21,13 @@ class ValueSetMatch(BaseModel):
     system: str = "https://namaste.ayush.gov.in/fhir/CodeSystem/ayurveda"
     code: str
     display: str
+    term_sanskrit: str
+    definition: str
+    icd11_tm2_mapped_code: Optional[str] = None
+    demo_case_type: Optional[str] = None
+    mapping_source: str = "seed"
+    confidence_score: Optional[float] = None
+    needs_review: bool = False
 
 
 class Coding(BaseModel):

@@ -5,8 +5,8 @@
 
 class AyuSutraAPI {
   constructor() {
-    this.useMock = true; // Easily flip to false for FastAPI backend
-    this.baseUrl = "/api/v1";
+    this.useMock = false;
+    this.baseUrl = "http://localhost:8000";
   }
 
   // Simulate network delay for realistic response feeling
@@ -18,6 +18,30 @@ class AyuSutraAPI {
    * Search terminology catalog across NAMASTE, TM2, and ICD-11
    */
   async searchTerminology(query = "") {
+    if (!this.useMock) {
+      if (!query.trim()) {
+        const response = await fetch(`${this.baseUrl}/CodeSystem`);
+        if (!response.ok) throw new Error("Unable to load the NAMASTE catalog");
+        const resource = await response.json();
+        return resource.concept.map(concept => this._fromBackendRecord({
+          code: concept.code,
+          display: concept.display,
+          term_sanskrit: concept.designation?.[0]?.value || "",
+          definition: concept.definition,
+          icd11_tm2_mapped_code: concept.icd11_tm2_mapped_code,
+          demo_case_type: concept.demo_case_type,
+          mapping_source: concept.mapping_source,
+          confidence_score: concept.confidence_score,
+          needs_review: concept.needs_review
+        }));
+      }
+
+      const response = await fetch(`${this.baseUrl}/ValueSet/$expand?filter=${encodeURIComponent(query.trim())}`);
+      if (!response.ok) throw new Error("Unable to search the NAMASTE catalog");
+      const records = await response.json();
+      return records.map(record => this._fromBackendRecord(record));
+    }
+
     await this._delay(100);
     const q = query.trim().toLowerCase();
     if (!q) return window.AYUSH_MOCK_DATA.diagnoses;
@@ -29,6 +53,52 @@ class AyuSutraAPI {
       (item.biomedical.code && item.biomedical.code.toLowerCase().includes(q)) ||
       item.synonyms.some(s => s.toLowerCase().includes(q))
     );
+  }
+
+  _fromBackendRecord(record) {
+    const mappedCode = record.icd11_tm2_mapped_code || null;
+    return {
+      id: record.code,
+      name: record.display,
+      systemCategory: "Ayurveda Diagnostic Concept",
+      definition: record.definition || "",
+      sanskrit: record.term_sanskrit || "",
+      synonyms: record.term_sanskrit ? [record.term_sanskrit] : [],
+      namaste: {
+        code: record.code,
+        display: record.display,
+        system: "National AYUSH Terminology (NAMASTE)",
+        systemUri: "https://namaste.ayush.gov.in/fhir/CodeSystem/ayurveda",
+        source: record.mapping_source || "NAMASTE database",
+        version: "Database seed",
+        status: record.needs_review ? "Needs review" : "Active",
+        category: record.demo_case_type || "Ayurveda",
+        description: record.definition || ""
+      },
+      tm2: {
+        code: mappedCode || "NOT MAPPED",
+        display: mappedCode ? "ICD-11 TM2 mapped code" : "No TM2 mapping in database",
+        system: "WHO ICD-11 Traditional Medicine Module 2 (TM2)",
+        systemUri: "http://id.who.int/icd/release/11/tm2",
+        relationship: mappedCode ? "Mapped" : "No map"
+      },
+      biomedical: {
+        hasEquivalent: false,
+        code: "NOT AVAILABLE",
+        display: "No biomedical mapping stored in the NAMASTE database",
+        relationship: "No map",
+        confidence: 0
+      },
+      mappingRationale: {
+        mappingType: mappedCode ? "Database mapping" : "No TM2 mapping",
+        source: record.mapping_source || "NAMASTE database",
+        version: "Database seed",
+        confidence: record.confidence_score == null ? "Not supplied" : `${record.confidence_score}`,
+        provenance: record.demo_case_type || "NAMASTE database",
+        lastUpdated: "Not supplied"
+      },
+      databaseRecord: record
+    };
   }
 
   /**

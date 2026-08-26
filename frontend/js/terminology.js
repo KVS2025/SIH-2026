@@ -6,7 +6,119 @@
 document.addEventListener("DOMContentLoaded", () => {
   initTerminologySearch();
   initAccordion();
+  initCatalog();
 });
+
+let catalogRecords = [];
+
+async function initCatalog() {
+  const tableBody = document.getElementById("catalog-table-body");
+  if (!tableBody) return;
+
+  const searchInput = document.getElementById("catalog-search");
+  const filters = [
+    document.getElementById("filter-status"),
+    document.getElementById("filter-category"),
+    document.getElementById("filter-source")
+  ];
+
+  renderCatalogState("Loading catalog concepts...", "", "loading");
+  try {
+    catalogRecords = await window.api.searchTerminology("");
+    populateCatalogFilters(catalogRecords);
+    renderCatalogTable(applyCatalogFilters(searchInput?.value || "", filters));
+  } catch (error) {
+    renderCatalogState("Unable to load catalog concepts", "Please check the backend connection and try again.", "error");
+    return;
+  }
+
+  searchInput?.addEventListener("input", async event => {
+    renderCatalogState("Loading catalog concepts...", "", "loading");
+    try {
+      catalogRecords = await window.api.searchTerminology(event.target.value);
+      renderCatalogTable(applyCatalogFilters(event.target.value, filters));
+    } catch (error) {
+      renderCatalogState("Unable to load catalog concepts", "Please check the backend connection and try again.", "error");
+    }
+  });
+
+  filters.forEach(filter => filter?.addEventListener("change", () => {
+    renderCatalogTable(applyCatalogFilters(searchInput?.value || "", filters));
+  }));
+}
+
+function populateCatalogFilters(records) {
+  const categories = [...new Set(records.map(record => record.databaseRecord?.demo_case_type).filter(Boolean))].sort();
+  const sources = [...new Set(records.map(record => record.databaseRecord?.mapping_source).filter(Boolean))].sort();
+  populateCatalogFilter("filter-category", "Category", categories);
+  populateCatalogFilter("filter-source", "Source", sources);
+}
+
+function populateCatalogFilter(id, label, values) {
+  const select = document.getElementById(id);
+  if (!select) return;
+  select.innerHTML = `<option value="all">${label}</option>`;
+  values.forEach(value => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+}
+
+function applyCatalogFilters(query, filters) {
+  const normalizedQuery = query.trim().toLowerCase();
+  const [statusFilter, categoryFilter, sourceFilter] = filters.map(filter => filter?.value || "all");
+  return catalogRecords.filter(record => {
+    const databaseRecord = record.databaseRecord || {};
+    const searchableText = [record.name, record.sanskrit, record.namaste?.code, record.tm2?.code, record.definition]
+      .filter(Boolean).join(" ").toLowerCase();
+    const status = databaseRecord.needs_review ? "review" : "active";
+    return (!normalizedQuery || searchableText.includes(normalizedQuery))
+      && (statusFilter === "all" || status === statusFilter)
+      && (categoryFilter === "all" || databaseRecord.demo_case_type === categoryFilter)
+      && (sourceFilter === "all" || databaseRecord.mapping_source === sourceFilter);
+  });
+}
+
+function renderCatalogState(title, detail, state) {
+  const tbody = document.getElementById("catalog-table-body");
+  if (!tbody) return;
+  tbody.innerHTML = `<tr><td class="catalog-state" colspan="6"><strong>${title}</strong>${detail ? `<span>${detail}</span>` : ""}</td></tr>`;
+  tbody.closest(".catalog-table-wrapper")?.setAttribute("data-state", state);
+}
+
+function escapeCatalogText(value) {
+  const element = document.createElement("div");
+  element.textContent = value == null ? "" : String(value);
+  return element.innerHTML;
+}
+
+function renderCatalogTable(items) {
+  const tbody = document.getElementById("catalog-table-body");
+  const count = document.getElementById("catalog-count");
+  if (!tbody) return;
+  if (count) count.textContent = `${items.length} concept${items.length === 1 ? "" : "s"}`;
+
+  if (items.length === 0) {
+    renderCatalogState("No concepts found", "Try adjusting your search or filters.", "empty");
+    return;
+  }
+
+  tbody.innerHTML = items.map(item => {
+    const databaseRecord = item.databaseRecord || {};
+    return `
+      <tr>
+        <td><div class="catalog-concept-name">${escapeCatalogText(item.name)}</div><div class="catalog-concept-category">${escapeCatalogText(item.systemCategory)}</div></td>
+        <td class="catalog-sanskrit">${escapeCatalogText(item.sanskrit || item.namaste?.display)}</td>
+        <td><span class="code-badge namaste">${escapeCatalogText(item.namaste?.code)}</span></td>
+        <td><span class="code-badge tm2">${escapeCatalogText(item.tm2?.code)}</span></td>
+        <td class="definition-cell">${escapeCatalogText(item.definition)}</td>
+        <td><a href="dashboard.html?diag=${encodeURIComponent(item.name)}" class="catalog-inspect-link">Inspect <i data-lucide="arrow-right" aria-hidden="true"></i></a></td>
+      </tr>`;
+  }).join("");
+  if (window.lucide) window.lucide.createIcons();
+}
 
 /**
  * Initialize main autocomplete search box

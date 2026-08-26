@@ -556,6 +556,14 @@
     font-size: 1rem;
   }
 
+  .catalog-toolbar {
+    grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(130px, 1fr));
+  }
+
+  .catalog-table {
+    min-width: 1180px;
+  }
+
   .code-chip {
     font-size: 0.68rem;
     padding: 2px 6px;

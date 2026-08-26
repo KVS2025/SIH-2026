@@ -17,6 +17,11 @@ def _row_to_concept(row) -> dict:
         "display": row["term_english"],
         "definition": row["definition"],
         "designation": [{"language": "sa", "value": row["term_sanskrit"]}],
+        "icd11_tm2_mapped_code": row["icd11_tm2_mapped_code"],
+        "demo_case_type": row["demo_case_type"],
+        "mapping_source": row["mapping_source"],
+        "confidence_score": row["confidence_score"],
+        "needs_review": bool(row["needs_review"]),
     }
 
 
