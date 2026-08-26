@@ -13,44 +13,20 @@ load_dotenv()
 class ICDClient:
     def __init__(self):
 
-        # =====================================================
-        # Credentials
-        # =====================================================
-
         self.client_id = os.getenv("ClientId")
         self.client_secret = os.getenv("ClientSecret")
 
-        if not self.client_id:
-            raise ValueError("ClientId is missing from .env")
-
-        if not self.client_secret:
-            raise ValueError("ClientSecret is missing from .env")
-
-        # =====================================================
-        # WHO API URLs
-        # =====================================================
-
         self.token_url = os.getenv("WHO_TOKEN_URL")
+
         self.search_url = os.getenv("WHO_SEARCH_URL")
+
+        self.foundation_search_url = os.getenv("WHO_FOUNDATION_SEARCH_URL")
+
         self.codeinfo_url = os.getenv("WHO_CODEINFO_URL")
+
         self.describe_url = os.getenv("WHO_DESCRIBE_URL")
+
         self.lookup_url = os.getenv("WHO_LOOKUP_URL")
-
-        urls = {
-            "WHO_TOKEN_URL": self.token_url,
-            "WHO_SEARCH_URL": self.search_url,
-            "WHO_CODEINFO_URL": self.codeinfo_url,
-            "WHO_DESCRIBE_URL": self.describe_url,
-            "WHO_LOOKUP_URL": self.lookup_url,
-        }
-
-        for name, url in urls.items():
-            if not url:
-                raise ValueError(f"{name} is missing from .env")
-
-        # =====================================================
-        # Token
-        # =====================================================
 
         self.access_token = None
 
@@ -173,6 +149,21 @@ class ICDClient:
 
         return self._get(self.search_url, params=params)
 
+    def search_foundation(self, text):
+        """
+        Search the ICD-11 Foundation for a concept.
+
+        This is used for resolving postcoordination values,
+        rather than searching MMS for a complete clinical
+        diagnosis.
+        """
+
+        params = {"q": text}
+
+        response = self._get(self.foundation_search_url, params=params)
+
+        return response
+
     def find_concept(self, text, top_n=5):
         """
         Search WHO for a concept and return compact candidates.
@@ -183,6 +174,39 @@ class ICDClient:
         candidates = self.extract_search_results(raw_results, top_matches_per_result=3)
 
         return candidates[:top_n]
+
+    def find_foundation_concept(self, text, top_n=5):
+        """
+        Find Foundation concepts for a postcoordination value.
+        """
+
+        raw_results = self.search_foundation(text)
+
+        results = self.extract_foundation_results(raw_results)
+
+        return results[:top_n]
+
+    def extract_foundation_results(self, response):
+        """
+        Extract useful Foundation concepts from a WHO
+        Foundation search response.
+        """
+
+        results = []
+
+        entities = response.get("destinationEntities", [])
+
+        for entity in entities:
+            results.append(
+                {
+                    "uri": entity.get("id"),
+                    "title": self._clean_html(entity.get("title", "")),
+                    "score": entity.get("score"),
+                    "foundation_uri": entity.get("foundationUri"),
+                }
+            )
+
+        return results
 
     def extract_search_results(self, response, top_matches_per_result=3):
         """
@@ -264,6 +288,24 @@ class ICDClient:
 
         return results
 
+    def get_postcoordination_scale(self, code):
+        """
+        Get the postcoordination scale for an ICD-11 entity.
+
+        WHO provides the applicable axes and their allowed
+        value-set information.
+        """
+
+        description = self.describe(code=code)
+
+        scale = description.get("postcoordinationScale", [])
+
+        return {
+            "code": code,
+            "postcoordination_scale": scale,
+            "description": description,
+        }
+
     @staticmethod
     def _clean_html(text):
 
@@ -342,26 +384,21 @@ class ICDClient:
     # DESCRIBE
     # =========================================================
 
-    def describe(self, code=None, uri=None):
+    def describe(self, uri=None, code=None):
         """
-        Describe an ICD-11 code, URI or combination.
+        Resolve an ICD Foundation URI or ICD code.
 
-        Provide either code OR uri.
+        This is especially useful for postcoordination because
+        WHO can return the MMS code and postcoordination values.
         """
-
-        if code is None and uri is None:
-            raise ValueError("Provide either 'code' or 'uri'")
-
-        if code is not None and uri is not None:
-            raise ValueError("Provide either 'code' or 'uri', not both")
 
         params = {}
 
-        if code is not None:
-            params["code"] = code
-
-        if uri is not None:
+        if uri:
             params["uri"] = uri
+
+        if code:
+            params["code"] = code
 
         return self._get(self.describe_url, params=params)
 
@@ -481,6 +518,18 @@ class ICDClient:
             results.append(compact_result)
 
         return results
+
+    def resolve_postcoordination_value(self, foundation_uri, expected_title=None):
+        """
+        Resolve a Foundation entity to information useful
+        for postcoordination.
+
+        Returns the WHO description response.
+        """
+
+        result = self.describe(uri=foundation_uri)
+
+        return result
 
     # =========================================================
     # CLEAN WHO HIGHLIGHTING
