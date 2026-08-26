@@ -4,6 +4,7 @@ db.py — SQLite setup + CSV seed loader for the NAMASTE terminology micro-servi
 Run standalone to (re)build the database from the mock CSV:
     python -m app.db
 """
+
 import csv
 import sqlite3
 from pathlib import Path

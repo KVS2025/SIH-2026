@@ -2,7 +2,7 @@
 main.py — FastAPI app entrypoint.
 
 Run with:
-    uvicorn app.main:app --reload --port 8000
+    uvicorn application.main:app --reload --port 8000
 
 Then visit http://localhost:8000/docs for interactive Swagger UI —
 this alone is enough to demo Steps 1-3 live.
