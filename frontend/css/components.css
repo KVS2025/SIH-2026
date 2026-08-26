@@ -976,3 +976,148 @@ pre.api-json-display {
 .catalog-state strong, .catalog-state span { display: block; }
 .catalog-state strong { color: var(--color-navy); font-size: 0.95rem; }
 .catalog-state span { margin-top: 5px; font-size: 0.82rem; }
+
+/* Demo clinician authentication */
+.auth-page {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg-cream);
+}
+
+.auth-shell {
+  width: min(100%, 460px);
+}
+
+.auth-panel {
+  padding: clamp(24px, 5vw, 42px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.auth-brand .brand-logo-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.auth-heading {
+  margin: 42px 0 26px;
+}
+
+.auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-forest);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.auth-eyebrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+.auth-heading h1 {
+  margin-top: 10px;
+  color: var(--color-navy);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.2;
+}
+
+.auth-heading p {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-submit {
+  width: 100%;
+  min-height: 46px;
+  justify-content: center;
+  margin-top: 4px;
+  background: var(--color-emerald);
+}
+
+.auth-error {
+  margin-top: -2px;
+  color: var(--status-error);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.auth-demo-note {
+  display: grid;
+  gap: 5px;
+  margin-top: 26px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-emerald);
+  border-radius: var(--radius-md);
+  background: var(--bg-sage-subtle);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.auth-demo-label {
+  margin-bottom: 3px;
+  color: var(--color-forest);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.auth-demo-note strong {
+  color: var(--text-primary);
+}
+
+.auth-demo-note small {
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.auth-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.auth-logout:hover {
+  border-color: var(--border-emerald);
+  background: var(--bg-sage);
+  color: var(--color-forest);
+}
+
+.auth-logout svg {
+  width: 15px;
+  height: 15px;
+}

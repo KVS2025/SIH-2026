@@ -1,3 +1,11 @@
+const isLoginPage = window.location.pathname.endsWith("/login.html") || window.location.pathname.endsWith("login.html");
+const isAuthenticated = sessionStorage.getItem("ayusutra_auth") === "demo-clinician-authenticated";
+
+if (!isLoginPage && !isAuthenticated) {
+  const returnPath = `${window.location.pathname.split("/").pop() || "dashboard.html"}${window.location.search}`;
+  window.location.replace(`login.html?next=${encodeURIComponent(returnPath)}`);
+}
+
 /**
  * AyuSutra - Main Application Logic (Production Grade)
  * Responsive Navigation, Drawer Control, Mobile Bottom Navigation, Toasts & Modals
@@ -12,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. Setup Responsive Navigation & Drawer
   initNavigation();
 
+  // 2b. Add the shared clinician sign-out control
+  initAuthControls();
+
   // 3. Restore sidebar scroll position across navigation
   restoreSidebarScroll();
 
@@ -21,6 +32,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // 5. Global Keyboard Accessibility (Escape to close modals/drawers)
   initKeyboardShortcuts();
 });
+
+function initAuthControls() {
+  if (isLoginPage) return;
+  const topbarRight = document.querySelector(".topbar-right");
+  if (!topbarRight || topbarRight.querySelector(".auth-logout")) return;
+
+  const logoutButton = document.createElement("button");
+  logoutButton.type = "button";
+  logoutButton.className = "auth-logout";
+  logoutButton.title = "Sign out";
+  logoutButton.setAttribute("aria-label", "Sign out");
+  logoutButton.innerHTML = '<i data-lucide="log-out" aria-hidden="true"></i><span>Sign out</span>';
+  logoutButton.addEventListener("click", () => {
+    sessionStorage.removeItem("ayusutra_auth");
+    sessionStorage.removeItem("ayusutra_user");
+    const currentPage = `${window.location.pathname.split("/").pop() || "dashboard.html"}${window.location.search}`;
+    window.location.replace(`login.html?next=${encodeURIComponent(currentPage)}`);
+  });
+  topbarRight.appendChild(logoutButton);
+  if (window.lucide) window.lucide.createIcons();
+}
 
 /**
  * Preserves & restores sidebar internal scroll position across page navigation

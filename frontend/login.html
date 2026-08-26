@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinician Sign In - AyuSutra</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/medical-insurance.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-panel" aria-labelledby="auth-title">
+      <a class="auth-brand" href="index.html" aria-label="Return to AyuSutra home">
+        <span class="brand-logo-icon"><i data-lucide="network"></i></span>
+        <span class="brand-title">
+          <span class="name">Ayu<span>Sutra</span></span>
+          <span class="tagline">Terminology Platform</span>
+        </span>
+      </a>
+
+      <div class="auth-heading">
+        <span class="auth-eyebrow"><i data-lucide="shield-check"></i> Clinical workspace</span>
+        <h1 id="auth-title">Clinician sign in</h1>
+        <p>Verify your demo credentials to access the terminology workspace.</p>
+      </div>
+
+      <form id="login-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-username">CLINICIAN ID</label>
+          <input class="form-input" id="login-username" name="username" type="text" autocomplete="username" placeholder="Enter clinician ID" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">DEMO PASSWORD</label>
+          <input class="form-input" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter demo password" required>
+        </div>
+        <p id="login-error" class="auth-error" role="alert" hidden>Incorrect demo credentials. Please try again.</p>
+        <button class="btn btn-primary auth-submit" type="submit"><i data-lucide="log-in"></i> Sign in to workspace</button>
+      </form>
+
+      <div class="auth-demo-note">
+        <div class="auth-demo-label">DEMO CREDENTIALS</div>
+        <div><strong>Clinician ID:</strong> dr.ananya</div>
+        <div><strong>Password:</strong> ayus123</div>
+        <small>Demo-only authentication for this prototype.</small>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+
+    const form = document.getElementById("login-form");
+    const error = document.getElementById("login-error");
+    const params = new URLSearchParams(window.location.search);
+    const requestedPage = params.get("next") || "dashboard.html";
+    const nextPage = /^[a-zA-Z0-9_-]+\.html(?:\?.*)?$/.test(requestedPage) ? requestedPage : "dashboard.html";
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value;
+      const valid = username === "dr.ananya" && password === "ayus123";
+
+      if (!valid) {
+        error.hidden = false;
+        return;
+      }
+
+      sessionStorage.setItem("ayusutra_auth", "demo-clinician-authenticated");
+      sessionStorage.setItem("ayusutra_user", "Dr. Ananya Sharma");
+      window.location.replace(nextPage);
+    });
+  </script>
+</body>
+</html>
