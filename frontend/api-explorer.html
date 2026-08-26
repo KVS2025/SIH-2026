@@ -192,7 +192,7 @@
         </div>
 
         <!-- Request / Response Interactive Sandbox Output -->
-        <div class="card" style="display:flex; flex-direction:column; background:#0D1117; color:#C9D1D9; padding:clamp(16px, 2vw, 24px);">
+        <div class="card api-sandbox-card" style="display:flex; flex-direction:column; background:#0D1117; color:#C9D1D9; padding:clamp(16px, 2vw, 24px);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #21262D; flex-wrap:wrap; gap:8px;">
             <div style="font-weight:700; color:#F0F6FC; font-size:0.92rem;" id="sandbox-endpoint-title">
               Response Payload Sandbox
@@ -200,7 +200,7 @@
             <span class="status-badge" id="sandbox-status-code" style="background:#238636; color:#FFF; font-size:0.72rem;">200 OK (22ms)</span>
           </div>
 
-          <div style="flex:1; overflow-y:auto; max-height:450px;">
+          <div class="api-code-scroll">
             <pre class="fhir-json-codeblock"><code class="language-json" id="api-response-code">{
   "status": "success",
   "endpoint": "GET /terminology/search?q=Amavata",

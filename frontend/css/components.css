@@ -860,6 +860,18 @@
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  align-self: start;
+  height: fit-content;
+}
+
+.fhir-code-scroll,
+.api-code-scroll {
+  max-width: 100%;
+  overflow: auto;
+}
+
+.fhir-code-scroll {
+  max-height: 480px;
 }
 
 .fhir-json-codeblock {
@@ -870,6 +882,20 @@
   line-height: 1.5;
   color: #79C0FF;
   max-width: 100%;
+}
+
+.fhir-json-codeblock,
+.fhir-json-codeblock code,
+#api-response-code {
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.api-sandbox-card {
+  align-self: start;
+  height: fit-content;
 }
 
 /* ConceptMap Graph Canvas */
